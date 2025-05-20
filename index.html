@@ -603,15 +603,21 @@
 
     <!-- Depart -->
      <script>
-            function openNav() {
-                document.querySelector(".links").style.width = "100%";
-                document.querySelector("body").style.overflow = "hidden";
-            }
-            function closeNav() {
-                document.querySelector(".links").style.width = "0%";
-                document.querySelector("body").style.overflow = "unset";
-            }
-        </script>
+    function openNav() {
+        document.querySelector(".links").style.width = "100%";
+        document.querySelector("body").style.overflow = "hidden";
+    }
+    function closeNav() {
+        document.querySelector(".links").style.width = "0%";
+        document.querySelector("body").style.overflow = "unset";
+    }
+    // Fermer le menu quand on clique sur un lien
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll('.links a').forEach(function(link) {
+            link.addEventListener('click', closeNav);
+        });
+    });
+    </script>
 
     <!-- Modal -->
     <script>
