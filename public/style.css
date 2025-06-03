@@ -1,0 +1,1179 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    background-color: #f5f5f5;
+}
+
+/* BOÎTE DE DIALOGUE (Description) DEBUT */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background: white;
+    width: 90%;
+    max-width: 800px;
+    max-height: 90%;
+    overflow: hidden;
+    border-radius: 10px;
+    position: relative;
+    padding: 20px;
+}
+
+.modal-scroll {
+    overflow-y: auto;
+    max-height: 80vh;
+    padding-right: 10px;
+    margin-right: -15px;
+}
+
+.close-button {
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #555;
+}
+
+/* BOÎTE DE DIALOGUE (Description) FIN */
+
+/* BOÎTE DE DIALOGUE (Modalité) DEBUT */
+.commodite-modal {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.commodite-modal-content {
+    background-color: #fff;
+    margin: 5% auto;
+    padding: 30px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 750px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+.commodite-modal-close {
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #555;
+}
+
+.commodite-modal-close:hover {
+    color: #000;
+}
+
+.commodite-section-title {
+    font-weight: bold;
+    margin-top: 25px;
+    margin-bottom: 10px;
+    font-size: 1.15em;
+    color: #333;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 4px;
+}
+
+.commodite-modal-content ul {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 8px;
+}
+
+.commodite-modal-content li {
+    margin: 6px 0;
+    padding-left: 12px;
+}
+
+/* BOÎTE DE DIALOGUE (Modalité) FIN */
+
+/* Réglements Début */
+.reglement-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 60px 20px;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.reglement-modal-content {
+    background-color: #fff;
+    margin: auto;
+    border-radius: 10px;
+    padding: 30px;
+    width: 90%;
+    max-width: 700px;
+
+    max-height: 80vh;
+    /* Limite la hauteur de la boîte */
+    overflow-y: auto;
+    /* Active le scroll à l’intérieur */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+
+.reglement-modal-close {
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    color: #aaa;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.reglement-modal-close:hover {
+    color: #000;
+}
+
+.reglement-btn-modal {
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: #222;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* Réglements Fin */
+
+section {
+    padding: 20px 15%;
+}
+
+ul {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+button {
+    cursor: pointer;
+}
+
+.home {
+    min-height: 90vh;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.9)), url("images/Devant\ 0.avif");
+    background-position: center;
+    background-size: cover;
+    position: relative;
+    margin-bottom: 230px;
+    width: 100%;
+}
+
+.menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-weight: 400;
+    /* color: #fff; */
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 40px;
+    font-style: italic;
+    font-family: "Anton", sans-serif;
+}
+
+.logo a {
+    color: #fff;
+}
+
+.links {
+    display: flex;
+}
+
+.links li {
+    margin: 20px;
+}
+
+.links li a {
+    color: #fff;
+    position: relative;
+}
+
+.links li a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    background-color: #f9ad4a;
+    height: 4px;
+    width: 0%;
+    border-radius: 4px;
+    transition: 0.5s;
+}
+
+.links li a:hover::after {
+    width: 100%;
+}
+
+/* home_page_content */
+.home_page_content {
+    position: absolute;
+    bottom: 60px;
+}
+
+.home_page_content span {
+    display: flex;
+    align-items: center;
+}
+
+.home_page_content span i {
+    color: #f9ad4a;
+    margin-right: 15px;
+}
+
+.home_page_content span p {
+    color: #fff;
+    font-weight: bold;
+}
+
+.home_page_content h1 {
+    margin: 20px 0;
+    font-size: 70px;
+    color: #fff;
+    font-weight: bold;
+    line-height: 80px;
+}
+
+.home_page_content .text {
+    color: #b5b5b5;
+    margin-bottom: 30px;
+}
+
+.white_btn {
+    background-color: transparent;
+    border: 1px solid #fff;
+    border-radius: 20px;
+    font-size: 15px;
+    color: #fff;
+    padding: 10px 30px;
+    transition: 0.5s;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.white_btn a {
+    color: inherit;
+}
+
+.white_btn:hover {
+    background-color: #fff;
+    color: #000;
+}
+
+.white_btn i {
+    margin-left: 20px;
+}
+
+/* image_box */
+.image_box {
+    position: absolute;
+    bottom: -140px;
+    right: 10%;
+}
+
+.image_box img {
+    border-radius: 6px;
+    width: 450px;
+    height: 350px;
+    object-fit: cover;
+    box-shadow: 0 32px 80px -32px rgba(0, 0, 0, .24);
+}
+
+.image_box p {
+    margin-top: 20px;
+    text-align: right;
+    font-weight: bold;
+    color: black;
+}
+
+.image_box i {
+    color: #f9ad4a;
+    margin-right: 15px;
+}
+
+/* text_section */
+.text_section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-weight: bold;
+    position: relative;
+}
+
+.text_section p {
+    position: absolute;
+    font-size: 250px;
+    font-family: 'Anton', sans-serif;
+    color: #f1f1f1;
+    z-index: -10;
+    line-height: 270px;
+    text-transform: uppercase;
+}
+
+.text_section h2 {
+    font-size: 30px;
+}
+
+.owner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin: 120px 0;
+    height: 70vh;
+    margin-bottom: 170px;
+}
+
+.image_box_owner {
+    width: 45%;
+    height: 100%;
+}
+
+.image_box_owner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 6px;
+    box-shadow: 0 32px 80px -32px rgba(0, 0, 0, .24);
+}
+
+.content_box {
+    width: 45%;
+}
+
+.small_title {
+    text-transform: uppercase;
+    font-size: 14px;
+    letter-spacing: 2px;
+    position: relative;
+    width: fit-content;
+}
+
+.small_title::before {
+    content: "";
+    position: absolute;
+    background: #f9ad4a;
+    left: -65px;
+    bottom: 10px;
+    width: 50px;
+    height: 2px;
+    border-radius: 6px;
+}
+
+.big_title {
+    margin: 20px 0;
+    font-size: 40px;
+    line-height: 40px;
+}
+
+.text {
+    margin-bottom: 20px;
+}
+
+.dark_btn {
+    color: #000;
+    border: 1px solid #000;
+}
+
+.content_box button {
+    margin-top: 30px;
+}
+
+.dark_btn:hover {
+    background-color: #000;
+    color: #fff;
+}
+
+.image_box_owner p {
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.content_box p {
+    margin-top: 20px;
+}
+
+/* Background */
+.background {
+    height: 70vh;
+    width: 100%;
+    position: relative;
+    margin-bottom: 200px;
+}
+
+.background .image {
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+}
+
+.background img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -100;
+    animation: infinite animation1;
+    animation-duration: 50s;
+}
+
+@keyframes animation1 {
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(2);
+    }
+}
+
+.text-box {
+    position: absolute;
+    right: 10%;
+    bottom: -130px;
+    z-index: 10;
+    width: 55%;
+    background-color: #fff;
+    box-shadow: 0 32px 80px -32px rgba(0, 0, 0, .24);
+    padding: 35px;
+    border-radius: 6px;
+}
+
+.text-box span {
+    font-weight: bold;
+}
+
+.text-box h3 {
+    margin: 15px 0;
+    font-weight: bold;
+    font-size: 30px;
+}
+
+.text-box p {
+    margin-bottom: 25px;
+}
+
+.text-box h6 {
+    font-size: 14px;
+    margin: 15px 0;
+}
+
+.text-box i {
+    margin-right: 10px;
+    color: #f9ad4a;
+}
+
+.text-box button {
+    margin-top: 45px;
+}
+
+.text-box button i {
+    color: #000;
+}
+
+.text-box button:hover i {
+    color: #fff;
+}
+
+/* Big */
+.big {
+    margin: 290px 0;
+    margin-bottom: 50px;
+}
+
+.big p {
+    font-size: 260px;
+    line-height: 240px;
+}
+
+.big h2 {
+    font-size: 80px;
+}
+
+/* Services */
+.services {
+    display: flex;
+    text-align: center;
+    margin-top: 35px;
+}
+
+.services .box {
+    width: 33.33%;
+    margin: 0 35px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.services .box i {
+    font-size: 40px;
+    color: #f9ad4a;
+    background-color: #f7f0e6;
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.services .box h2 {
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+
+.services .box p {
+    color: #999;
+}
+
+/* Testimonials */
+.testimonial-carousel {
+    margin: 120px 0;
+    text-align: center;
+    position: relative;
+}
+
+.carousel-container {
+    position: relative;
+    overflow: hidden;
+    max-width: 900px;
+    margin: auto;
+}
+
+.carousel-track {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.comment {
+    flex: 0 0 48%;
+    max-width: 50%;
+    padding: 20px;
+    box-sizing: border-box;
+    background: #fff;
+    border-radius: 15px;
+    margin: 0 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.comment img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+}
+
+.profil {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background:  #f9ad4a;
+    color: white;
+    border: none;
+    font-size: 24px;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 50%;
+    z-index: 1;
+}
+
+.carousel-btn:hover {
+    background-color: #0056b3;
+}
+
+.carousel-btn.prev {
+    left: 10px;
+}
+
+.carousel-btn.next {
+    right: 10px;
+}
+
+
+/* Map et adresse DEBUT */
+#carte {
+    margin: 40px 0;
+}
+
+#carte h2 {
+    margin-bottom: 20px;
+}
+
+.carte-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.carte-map {
+    flex: 1 1 60%;
+    border-radius: 12px;
+    overflow: hidden;
+    min-width: 300px;
+}
+
+.carte-map iframe {
+    width: 100%;
+    height: 450px;
+    border: 0;
+    display: block;
+}
+
+.carte-info {
+    flex: 1 1 35%;
+    min-width: 250px;
+    padding: 20px;
+    background-color: #f8f8f8;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.carte-info h3 {
+    margin-top: 0;
+}
+
+.carte-info a {
+    color: #007BFF;
+    text-decoration: none;
+}
+
+.carte-info a:hover {
+    text-decoration: underline;
+}
+
+/* Map et adresse FIN */
+
+footer {
+    background-color: #1a1a1a;
+    color: #fff;
+    font-size: 14px;
+    text-align: center;
+    padding: 20px 0;
+    font-weight: bold;
+}
+
+/* Bouton Open et Close */
+.openbtn {
+    display: none;
+}
+
+.closebtn {
+    display: none;
+}
+
+/* Réservation Début */
+.reservation-wrapper {
+      background-color: #fff;
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .reservation-wrapper label {
+      display: block;
+      margin-top: 15px;
+    }
+
+    .reservation-wrapper input {
+      padding: 8px;
+      width: 100%;
+      font-size: 16px;
+    }
+
+    .clear-link {
+      display: inline-block;
+      margin-top: 5px;
+      color: #007BFF;
+      cursor: pointer;
+      font-size: 14px;
+      text-decoration: underline;
+    }
+
+    .total {
+      margin-top: 20px;
+      font-size: 16px;
+    }
+
+    .total p {
+      margin: 5px 0;
+    }
+
+    .total hr {
+      margin: 10px 0;
+    }
+
+    #calculateBtn {
+      margin-top: 15px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    #calculateBtn:hover {
+      background-color: #0056b3;
+    }
+/* Réservation Fin*/
+
+
+/* Responsive 1653*/
+@media screen and (max-width: 1140px) {
+    body {
+        transition: margin-left .5s;
+    }
+
+    section {
+        padding: 20px;
+    }
+
+    .home {
+        min-height: 50vh;
+        margin: 0;
+    }
+
+    .logo {
+        font-size: 30px;
+    }
+
+    .home_page_content {
+        margin-top: 150px;
+        position: unset;
+        width: 100%;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .home_page_content .title {
+        font-size: 50px;
+        line-height: 50px;
+    }
+
+    .image_box {
+        margin-top: 50px;
+        position: unset;
+        width: 100%;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    .image_box img {
+        width: 500px;
+    }
+
+    .openbtn,
+    .closebtn {
+        padding: 10px 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-transform: uppercase;
+        border-radius: 6px;
+        background-color: #fff;
+        border: 0;
+        color: #000;
+        outline: none;
+        font-weight: bold;
+        letter-spacing: 2px;
+    }
+
+    .closebtn {
+        display: unset;
+        position: absolute;
+        top: 28px;
+        right: 25px;
+    }
+
+    .hide-paypal {
+        visibility: hidden;
+        opacity: 0;
+        pointer-events: none;
+    }
+
+
+    .links {
+        background-color: #1a1a1a;
+        height: 100vh;
+        width: 0%;
+        position: absolute;
+        overflow: hidden;
+        flex-direction: column;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+        top: 0;
+        left: 0;
+        transition: 0.5s;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .text_section {
+        margin: 0;
+        background-color: #f9ad4a;
+    }
+
+    .text_section p {
+        font-size: 90px;
+    }
+
+    .text_section h2 {
+        font-size: 20px;
+    }
+
+    .owner {
+        flex-direction: column;
+        height: fit-content;
+        margin: 20px 0;
+    }
+
+    .image_box_owner,
+    .content_box {
+        width: 100%;
+    }
+
+    .image_box_owner {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .image_box_owner p {
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .content_box {
+        margin-top: 40px;
+        height: fit-content;
+    }
+
+    .background {
+        margin: 40px 0;
+        height: fit-content;
+        background: url("images/bg1.jpg");
+        padding: 20px;
+        background-position: center;
+        background-size: cover;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .background .image {
+        display: none;
+    }
+
+    .background .text-box {
+        position: unset;
+    }
+
+    .text-box {
+        padding: 20px;
+        height: 100%;
+        width: 100%;
+    }
+
+    .big p {
+        display: none;
+    }
+
+    .services {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+    }
+
+    .services .box {
+        margin-bottom: 30px;
+        width: 80%;
+    }
+
+    .testimonials {
+        flex-direction: column;
+    }
+
+    .left,
+    .right {
+        width: 100%;
+    }
+
+    .left h3 {
+        font-size: 30px;
+    }
+
+    .left .text {
+        font-size: 13px;
+    }
+
+    .comment {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
+
+
+
+
+.gal {
+    margin-bottom: 150px;
+    text-align: center;
+}
+
+.filter-buttons {
+    display: flex;
+    gap: 50px;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+
+
+.filter-btn.active {
+    background: #000;
+    color: #fff;
+}
+
+
+
+
+.gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+    justify-content: center;
+}
+
+.pic {
+    width: 100%;
+    max-width: 400px;
+    /* augmente la taille maximale */
+    height: auto;
+    /* laisse le contenu ajuster la hauteur */
+    position: relative;
+    cursor: pointer;
+}
+
+
+.pic img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    /* garde le ratio sans déformer */
+}
+
+
+.overlay {
+    position: absolute;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    width: 100%;
+    text-align: center;
+    padding: 5px;
+    font-size: 16px;
+}
+
+.show-more {
+    margin-top: 25px;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.9);
+    justify-content: center;
+    align-items: center;
+    z-index: 9998;
+    padding: 30px;
+    overflow-y: auto;
+    /* pour permettre le scroll si beaucoup d'images */
+    flex-direction: column;
+}
+
+.modal-content {
+    position: relative;
+    width: 90%;
+    max-width: 1000px;
+    max-height: 90vh;
+    /* Limite la hauteur */
+    overflow-y: auto;
+    /* Permet le scroll */
+    padding-top: 60px;
+    /* Laisse de la place pour le bouton ✖ */
+}
+
+.close-modal {
+    position: fixed;
+    /* Fixe au viewport */
+    top: 20px;
+    right: 40px;
+    background: #f44336;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    font-size: 16px;
+    cursor: pointer;
+    z-index: 9999;
+}
+
+.modal-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.modal-gallery .thumb {
+    width: 150px;
+    cursor: pointer;
+    position: relative;
+}
+
+.modal-gallery .thumb img {
+    width: 100%;
+    display: block;
+}
+
+.modal-gallery .thumb span {
+    display: block;
+    text-align: center;
+    color: #000;
+    margin-top: 5px;
+}
+
+.viewer {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.viewer img {
+    max-width: 100%;
+    max-height: 70vh;
+    object-fit: contain;
+}
+
+.viewer #imageTitle {
+    color: white;
+    margin-top: 10px;
+}
+.viewer .nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+.nav-btn {
+ position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255,255,255,0.8);
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  z-index: 2;
+}
+#viewer {
+  position: relative;
+  text-align: center;
+  padding: 20px;
+}
+#prevBtn {
+  left: 30px; /* plus loin du bord gauche */
+}
+
+#nextBtn {
+  right: 30px; /* plus loin du bord droit */
+}
+
+
+
+@media (max-width: 768px) {
+    .pic {
+        width: 100%;
+        max-width: 100%;
+        /* occupe toute la largeur du conteneur */
+        height: auto;
+    }
+
+    .pic img {
+        height: auto;
+        max-height: 400px;
+        /* limite la hauteur pour éviter qu'elle prenne tout l'écran */
+    }
+}

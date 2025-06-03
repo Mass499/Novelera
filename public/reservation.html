@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Réservation Chalet</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://kit.fontawesome.com/61523b4b4d.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css" />
+  <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/bundle.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/luxon@3/build/global/luxon.min.js"></script>
+  <!-- SDK PayPal (AJOUTE TON CLIENT ID) -->
+  <script
+    src="https://www.paypal.com/sdk/js?client-id=ARlNffPdCNsoUhm7z-3pLPlt7fax-d4UEb3kVBg1Yo45y_aVOOXNl3HXB4oeOYmG4ejK5gR03_t1qM7V&currency=CAD">
+  </script>
+</head>
+
+<body>
+    <div id="language-switch" style="position: fixed; top: 10px; right: 10px; z-index: 999;">
+        <button onclick="setLanguage('fr')">FR</button>
+        <button onclick="setLanguage('en')">EN</button>
+    </div>
+
+  <!-- Barre de navigation -->
+  <section class="home">
+     <div class="menu">
+            <div class="logo"><a href="index.html"><i class="fa-brands fa-joomla">NovelEra</i></a>
+            </div>
+            <button class="openbtn" data-i18n="text_70" onclick="openNav()">open</button>
+            <ul class="links">
+                <button class="closebtn" data-i18n="text_71" onclick="closeNav()">close</button>
+                <li><a href="index.html" data-i18n="text_72">Accueil</a></li>
+                <li><a href="index.html#Decouvrir" data-i18n="text_73">Découvrir</a></li>
+                <li><a href="index.html#Description" data-i18n="text_74">Description</a></li>
+                <li><a href="index.html#temoignages" data-i18n="text_75">Témoignages</a></li>
+                <li><a href="reservation.html" data-i18n="text_76">Réservez</a></li>
+                <li><a href="index.html#carte" data-i18n="text_77">Contact</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="reservation-wrapper">
+      <h2 data-i18n="text_350">Réservez votre séjour</h2>
+     <p data-i18n="text_351">
+      <label>Choisir date d'arrivée et de départ :</p>
+        <input data-i18n="text_352" id="dateRange" type="text" placeholder="Choisir dates">
+      <div class="clear-link" onclick="clearDate()" data-i18n="text_353">Effacer</div>
+      </label>
+
+      <!-- <button id="calculateBtn" onclick="onCalculateClick()">Calculer</button> -->
+
+      <div class="total">
+        <p id="nightsLine"></p>
+        <p data-i18n="text_354">Frais de nettoyage : <span id="cleaningFeeLine">250$ CAD</span></p>
+        <p>Taxes : <span id="taxesLine">0$ CAD</span></p>
+        <hr>
+        <p><strong>Total : <span id="totalPrice">0</span>$ CAD</strong></p>
+
+        <!-- Conteneur du bouton -->
+        <div id="paypal-button-container"></div>
+      </div>
+
+    </div>
+  </section>
+  <script src="reservation.js"></script>
+</body>
+<script src="lang.js"></script>
+
+</html>
