@@ -16,33 +16,34 @@
 </head>
 
 <body>
-    <div id="language-switch" style="position: fixed; top: 10px; right: 10px; z-index: 999;">
-        <button onclick="setLanguage('fr')">FR</button>
-        <button onclick="setLanguage('en')">EN</button>
-    </div>
+  <div id="language-switch" style="position: fixed; top: 10px; right: 10px; z-index: 999;">
+    <button onclick="setLanguage('fr')" title="Basculer en français">FR</button>
+    <button onclick="setLanguage('en')" title="Basculer en français">EN</button>
+  </div>
 
   <!-- Barre de navigation -->
   <section class="home">
-     <div class="menu">
-            <div class="logo"><a href="index.html"><i class="fa-brands fa-joomla">NovelEra</i></a>
-            </div>
-            <button class="openbtn" data-i18n="text_70" onclick="openNav()">open</button>
-            <ul class="links">
-                <button class="closebtn" data-i18n="text_71" onclick="closeNav()">close</button>
-                <li><a href="index.html" data-i18n="text_72">Accueil</a></li>
-                <li><a href="index.html#Decouvrir" data-i18n="text_73">Découvrir</a></li>
-                <li><a href="index.html#Description" data-i18n="text_74">Description</a></li>
-                <li><a href="index.html#temoignages" data-i18n="text_75">Témoignages</a></li>
-                <li><a href="reservation.html" data-i18n="text_76">Réservez</a></li>
-                <li><a href="index.html#carte" data-i18n="text_77">Contact</a></li>
-            </ul>
-        </div>
+    <div class="menu">
+      <div class="logo"><a href="index.html"><i class="fa-brands fa-joomla">NovelEra</i></a>
+      </div>
+      <button class="openbtn" data-i18n="text_70" onclick="openNav()">open</button>
+      <ul class="links">
+        <button class="closebtn" data-i18n="text_71" onclick="closeNav()">close</button>
+        <li><a href="index.html" data-i18n="text_72">Accueil</a></li>
+        <li><a href="index.html#Decouvrir" data-i18n="text_73">Découvrir</a></li>
+        <li><a href="index.html#Description" data-i18n="text_74">Description</a></li>
+        <li><a href="index.html#temoignages" data-i18n="text_75">Témoignages</a></li>
+        <li><a href="reservation.html" data-i18n="text_76">Réservez</a></li>
+        <li><a href="index.html#carte" data-i18n="text_77">Contact</a></li>
+      </ul>
     </div>
+
     <div class="reservation-wrapper">
       <h2 data-i18n="text_350">Réservez votre séjour</h2>
-     <p data-i18n="text_351">
-      <label>Choisir date d'arrivée et de départ :</p>
+      <p data-i18n="text_351">Choisir date d'arrivée et de départ :</p>
+      <label>
         <input data-i18n="text_352" id="dateRange" type="text" placeholder="Choisir dates">
+      </label>
       <div class="clear-link" onclick="clearDate()" data-i18n="text_353">Effacer</div>
       </label>
 
@@ -50,7 +51,7 @@
 
       <div class="total">
         <p id="nightsLine"></p>
-        <p data-i18n="text_354">Frais de nettoyage : <span id="cleaningFeeLine">250$ CAD</span></p>
+        <p data-i18n="text_354">Frais de nettoyage :</p> <span id="cleaningFeeLine">250$ CAD</span>
         <p>Taxes : <span id="taxesLine">0$ CAD</span></p>
         <hr>
         <p><strong>Total : <span id="totalPrice">0</span>$ CAD</strong></p>
@@ -62,7 +63,7 @@
     </div>
   </section>
   <script src="reservation.js"></script>
+  <script src="lang.js"></script>
 </body>
-<script src="lang.js"></script>
 
 </html>

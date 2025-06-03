@@ -8,8 +8,12 @@ const nodemailer = require('nodemailer');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Sert tous les fichiers statiques du dossier public
+app.use(express.static(path.join(__dirname, 'public')));
+
 app.use(cors());
 app.use(express.json());
+
 
 // Variables d'environnement gmail
 require('dotenv').config();
@@ -69,7 +73,7 @@ app.post('/send-confirmation-email', async (req, res) => {
 
   try {
     await transporter.sendMail({
-      from: '"Chalet NovelEra" <massamba2377@gmail.com>',
+      from: `"Chalet NovelEra" <${process.env.GMAIL_USER}>`,
       to: email,
       subject: 'Confirmation de votre réservation - Chalet NovelEra',
       html: `
@@ -91,28 +95,68 @@ app.post('/send-confirmation-email', async (req, res) => {
   }
 });
 
+// Pour verifier que deux dates ne se chevauchent pas
+function datesSeChevauchent(debut1, fin1, debut2, fin2) {
+  return (new Date(debut1) < new Date(fin2)) && (new Date(debut2) < new Date(fin1));
+}
+
 // 📝 Enregistrement d’une réservation locale
-app.post('/add-reservation', (req, res) => {
+app.post('/add-reservation', async (req, res) => {
   const { name, email, startDate, endDate, total } = req.body;
 
   if (!startDate || !endDate || !email || !name || !total) {
     return res.status(400).send({ success: false, error: 'Champs requis manquants' });
   }
 
-  const newReservation = { name, email, startDate, endDate, total };
-  const reservationsPath = path.join(__dirname, 'reservations.json');
+  const nouvelleReservation = { name, email, startDate, endDate, total };
+  const cheminReservations = path.join(__dirname, 'reservations.json');
 
-  let reservations = [];
   try {
-    if (fs.existsSync(reservationsPath)) {
-      const data = fs.readFileSync(reservationsPath, 'utf-8');
-      reservations = JSON.parse(data);
+    // 1. Charger les réservations locales déjà enregistrées
+    let reservationsLocales = [];
+    if (fs.existsSync(cheminReservations)) {
+      const data = fs.readFileSync(cheminReservations, 'utf-8');
+      reservationsLocales = JSON.parse(data);
     }
 
-    reservations.push(newReservation);
-    fs.writeFileSync(reservationsPath, JSON.stringify(reservations, null, 2));
+    // 2. Charger les réservations Airbnb via le calendrier iCal
+    const dataICal = await ical.async.fromURL(icalURL);
+    let reservationsAirbnb = [];
+
+    for (let key in dataICal) {
+      const evenement = dataICal[key];
+      if (evenement.type === 'VEVENT') {
+        reservationsAirbnb.push({
+          startDate: evenement.start,
+          endDate: evenement.end,
+        });
+      }
+    }
+
+    // 3. Vérifier chevauchement avec réservations locales
+    const chevaucheLocal = reservationsLocales.some(r =>
+      datesSeChevauchent(r.startDate, r.endDate, startDate, endDate)
+    );
+
+    if (chevaucheLocal) {
+      return res.status(409).send({ success: false, error: 'Dates déjà réservées (locale)' });
+    }
+
+    // 4. Vérifier chevauchement avec réservations Airbnb
+    const chevaucheAirbnb = reservationsAirbnb.some(r =>
+      datesSeChevauchent(r.startDate, r.endDate, startDate, endDate)
+    );
+
+    if (chevaucheAirbnb) {
+      return res.status(409).send({ success: false, error: 'Dates déjà réservées (Airbnb)' });
+    }
+
+    // 5. Si pas de conflit, ajouter la réservation locale
+    reservationsLocales.push(nouvelleReservation);
+    fs.writeFileSync(cheminReservations, JSON.stringify(reservationsLocales, null, 2));
 
     res.status(200).send({ success: true });
+
   } catch (error) {
     console.error("Erreur lors de l'enregistrement de la réservation :", error);
     res.status(500).send({ success: false, error });
@@ -121,6 +165,6 @@ app.post('/add-reservation', (req, res) => {
 
 app.listen(PORT, () => {
   const isLocal = process.env.NODE_ENV !== 'production';
-  const host = isLocal ? 'http://localhost' : 'https://chalet-novelera.onrender.com/';
+  const host = isLocal ? 'http://localhost' : 'https://chalet-novelera.onrender.com';
   console.log(`✅ Serveur en ligne sur ${host}:${PORT}`);
 });

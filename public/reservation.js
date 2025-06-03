@@ -76,35 +76,51 @@ paypal.Buttons({
             }]
         });
     },
-    onApprove: function (data, actions) {
-        return actions.order.capture().then(function (details) {
-            alert('Merci ' + details.payer.name.given_name + 'pour votre réservation !');// Redirection ou confirmation ici
+    onApprove: async function (data, actions) {
+        try {
+            const details = await actions.order.capture();
+            alert('Merci ' + details.payer.name.given_name + ' pour votre réservation !');
 
-            // Email
-            // Récupération des infos nécessaires
             const email = details.payer.email_address;
             const name = details.payer.name.given_name;
             const total = parseFloat(document.getElementById('totalPrice').textContent);
             const range = document.getElementById('dateRange').value;
             const [startDate, endDate] = range.split(' - ');
 
-            // Envoi de l'e-mail
-            fetch(`${backendUrl}/send-confirmation-email`, {
+            // Envoi de l’e-mail de confirmation
+            const emailRes = await fetch(`${backendUrl}/send-confirmation-email`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, name, startDate, endDate, total })
-            }).then(res => {
-                if (res.ok) {
-                    console.log("E-mail envoyé !");
-                    // Rediriger ou afficher une confirmation
-                } else {
-                    console.error("Échec de l'envoi d'e-mail.");
-                }
             });
-        });
+
+            if (!emailRes.ok) throw new Error("Erreur lors de l'envoi de l'e-mail de confirmation.");
+
+            console.log("E-mail envoyé avec succès.");
+
+            // Enregistrement de la réservation
+            const reservationRes = await fetch(`${backendUrl}/add-reservation`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, email, startDate, endDate, total })
+            });
+
+            if (!reservationRes.ok) throw new Error("Erreur lors de l'enregistrement de la réservation.");
+
+            console.log("Réservation enregistrée.");
+
+            // ✅ Redirection vers une page de confirmation
+            window.location.href = "/success.html";
+
+        } catch (err) {
+            console.error(err);
+            alert("Une erreur est survenue pendant le traitement de votre réservation. Merci de réessayer.");
+        }
     }
 
 }).render('#paypal-button-container');
+
+
 
 // paypal Fin
 
@@ -118,8 +134,8 @@ function clearDate() {
 }
 // Définir la base URL du backend selon l'environnement
 const backendUrl = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
-  ? 'http://localhost:3000'
-  : 'https://chalet-novelera.onrender.com/'; // Remplace par ton URL Render ici
+    ? 'http://localhost:3000'
+    : 'https://chalet-novelera.onrender.com/'; // Remplace par ton URL Render ici
 
 async function getBlockedDates() {
     try {
