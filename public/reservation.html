@@ -12,7 +12,7 @@
   <!-- SDK PayPal (AJOUTE TON CLIENT ID) -->
   <script
     src="https://www.paypal.com/sdk/js?client-id=ARlNffPdCNsoUhm7z-3pLPlt7fax-d4UEb3kVBg1Yo45y_aVOOXNl3HXB4oeOYmG4ejK5gR03_t1qM7V&currency=CAD">
-  </script>
+    </script>
 </head>
 
 <body>
@@ -58,10 +58,21 @@
 
         <!-- Conteneur du bouton -->
         <div id="paypal-button-container"></div>
+
+        <!-- Message de confirmation -->
+        <div id="confirmationMessage"
+          style="display: none; padding: 20px; margin-top: 20px; background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; border-radius: 5px;">
+          Votre réservation a bien été confirmée. Merci !
+        </div>
       </div>
 
     </div>
   </section>
+
+
+
+
+
   <script src="reservation.js"></script>
   <script src="lang.js"></script>
 </body>

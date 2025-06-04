@@ -79,8 +79,6 @@ paypal.Buttons({
     onApprove: async function (data, actions) {
         try {
             const details = await actions.order.capture();
-            alert('Merci ' + details.payer.name.given_name + ' pour votre réservation !');
-
             const email = details.payer.email_address;
             const name = details.payer.name.given_name;
             const total = parseFloat(document.getElementById('totalPrice').textContent);
@@ -95,7 +93,6 @@ paypal.Buttons({
             });
 
             if (!emailRes.ok) throw new Error("Erreur lors de l'envoi de l'e-mail de confirmation.");
-
             console.log("E-mail envoyé avec succès.");
 
             // Enregistrement de la réservation
@@ -105,18 +102,31 @@ paypal.Buttons({
                 body: JSON.stringify({ name, email, startDate, endDate, total })
             });
 
-            if (!reservationRes.ok) throw new Error("Erreur lors de l'enregistrement de la réservation.");
+            if (!reservationRes.ok) {
+                const errorText = await reservationRes.text(); // récupère le texte de l'erreur côté serveur
+                console.error("Erreur enregistrement réservation:", errorText);
+                throw new Error("Erreur lors de l'enregistrement de la réservation.");
+            }
 
-            console.log("Réservation enregistrée.");
+            // ✅ Redirection vers la page de succès
+            const confirmation = document.getElementById("confirmationMessage");
+            if (confirmation) {
+                confirmation.textContent = "✅ Votre réservation a bien été confirmée. Merci !";
+                confirmation.style.display = "block";
+                confirmation.scrollIntoView({ behavior: 'smooth' });
 
-            // ✅ Redirection vers une page de confirmation
-            window.location.href = "/success.html";
+                // On garde en mémoire que la réservation a été confirmée
+                localStorage.setItem('reservationConfirmed', 'true');
+
+            }
+
 
         } catch (err) {
             console.error(err);
             alert("Une erreur est survenue pendant le traitement de votre réservation. Merci de réessayer.");
         }
     }
+
 
 }).render('#paypal-button-container');
 
@@ -172,5 +182,20 @@ async function initPicker() {
         }
     });
 }
+
+window.addEventListener('DOMContentLoaded', () => {
+    if (localStorage.getItem('reservationConfirmed') === 'true') {
+        const confirmation = document.getElementById("confirmationMessage");
+        if (confirmation) {
+            confirmation.textContent = "✅ Votre réservation a bien été confirmée. Merci !";
+            confirmation.style.display = "block";
+            confirmation.scrollIntoView({ behavior: 'smooth' });
+
+            // Supprimer le flag pour ne pas le montrer à chaque fois
+            localStorage.removeItem('reservationConfirmed');
+        }
+    }
+});
+
 
 initPicker();

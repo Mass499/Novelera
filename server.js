@@ -9,8 +9,8 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Sert tous les fichiers statiques du dossier public
-app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 app.use(express.json());
 
@@ -104,64 +104,78 @@ function datesSeChevauchent(debut1, fin1, debut2, fin2) {
 app.post('/add-reservation', async (req, res) => {
   const { name, email, startDate, endDate, total } = req.body;
 
+  console.log("📩 Nouvelle demande de réservation reçue :", req.body);
+
   if (!startDate || !endDate || !email || !name || !total) {
     return res.status(400).send({ success: false, error: 'Champs requis manquants' });
   }
 
-  const nouvelleReservation = { name, email, startDate, endDate, total };
+  const nouvelleReservation = {
+    name,
+    email,
+    startDate: new Date(startDate).toISOString(),
+    endDate: new Date(endDate).toISOString(),
+    total
+  };
+
   const cheminReservations = path.join(__dirname, 'reservations.json');
 
   try {
-    // 1. Charger les réservations locales déjà enregistrées
+    // 🔹 Étape 1 : Charger les réservations locales
     let reservationsLocales = [];
     if (fs.existsSync(cheminReservations)) {
       const data = fs.readFileSync(cheminReservations, 'utf-8');
       reservationsLocales = JSON.parse(data);
     }
 
-    // 2. Charger les réservations Airbnb via le calendrier iCal
+    // 🔹 Étape 2 : Charger les réservations Airbnb via iCal
     const dataICal = await ical.async.fromURL(icalURL);
     let reservationsAirbnb = [];
 
     for (let key in dataICal) {
-      const evenement = dataICal[key];
-      if (evenement.type === 'VEVENT') {
+      const evt = dataICal[key];
+      if (evt.type === 'VEVENT') {
         reservationsAirbnb.push({
-          startDate: evenement.start,
-          endDate: evenement.end,
+          startDate: new Date(evt.start).toISOString(),
+          endDate: new Date(evt.end).toISOString()
         });
       }
     }
 
-    // 3. Vérifier chevauchement avec réservations locales
-    const chevaucheLocal = reservationsLocales.some(r =>
-      datesSeChevauchent(r.startDate, r.endDate, startDate, endDate)
-    );
+    // 🔹 Étape 3 : Vérification chevauchement local
+    // const chevaucheLocal = reservationsLocales.some(r =>
+    //   datesSeChevauchent(r.startDate, r.endDate, nouvelleReservation.startDate, nouvelleReservation.endDate)
+    // );
 
-    if (chevaucheLocal) {
-      return res.status(409).send({ success: false, error: 'Dates déjà réservées (locale)' });
-    }
+    // if (chevaucheLocal) {
+    //   console.log("⛔ Chevauchement détecté avec une réservation locale.");
+    //   return res.status(409).send({ success: false, error: 'Dates déjà réservées (locale)' });
+    // }
 
-    // 4. Vérifier chevauchement avec réservations Airbnb
-    const chevaucheAirbnb = reservationsAirbnb.some(r =>
-      datesSeChevauchent(r.startDate, r.endDate, startDate, endDate)
-    );
+    // 🔹 Étape 4 : Vérification chevauchement Airbnb
+    // const chevaucheAirbnb = reservationsAirbnb.some(r =>
+    //   datesSeChevauchent(r.startDate, r.endDate, nouvelleReservation.startDate, nouvelleReservation.endDate)
+    // );
 
-    if (chevaucheAirbnb) {
-      return res.status(409).send({ success: false, error: 'Dates déjà réservées (Airbnb)' });
-    }
+    // if (chevaucheAirbnb) {
+    //   console.log("⛔ Chevauchement détecté avec une réservation Airbnb.");
+    //   return res.status(409).send({ success: false, error: 'Dates déjà réservées (Airbnb)' });
+    // }
 
-    // 5. Si pas de conflit, ajouter la réservation locale
+    // 🔹 Étape 5 : Enregistrement
     reservationsLocales.push(nouvelleReservation);
+
     fs.writeFileSync(cheminReservations, JSON.stringify(reservationsLocales, null, 2));
+    console.log("✅ Réservation enregistrée :", nouvelleReservation);
 
     res.status(200).send({ success: true });
 
   } catch (error) {
-    console.error("Erreur lors de l'enregistrement de la réservation :", error);
-    res.status(500).send({ success: false, error });
+    console.error("❌ Erreur lors du traitement de la réservation :", error);
+    res.status(500).send({ success: false, error: "Erreur interne serveur" });
   }
 });
+
 
 app.listen(PORT, () => {
   const isLocal = process.env.NODE_ENV !== 'production';
