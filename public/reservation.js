@@ -25,7 +25,6 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 //   Menu de navigation Fin
 
-
 // Contenu de réservation
 const pricePerNight = 239;
 const cleaningFee = 250;

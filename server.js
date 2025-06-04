@@ -104,8 +104,6 @@ function datesSeChevauchent(debut1, fin1, debut2, fin2) {
 app.post('/add-reservation', async (req, res) => {
   const { name, email, startDate, endDate, total } = req.body;
 
-  console.log("📩 Nouvelle demande de réservation reçue :", req.body);
-
   if (!startDate || !endDate || !email || !name || !total) {
     return res.status(400).send({ success: false, error: 'Champs requis manquants' });
   }
@@ -121,53 +119,51 @@ app.post('/add-reservation', async (req, res) => {
   const cheminReservations = path.join(__dirname, 'reservations.json');
 
   try {
-    // 🔹 Étape 1 : Charger les réservations locales
-    let reservationsLocales = [];
-    if (fs.existsSync(cheminReservations)) {
-      const data = fs.readFileSync(cheminReservations, 'utf-8');
-      reservationsLocales = JSON.parse(data);
-    }
+    const datesBloquées = new Set();
 
-    // 🔹 Étape 2 : Charger les réservations Airbnb via iCal
+    // 🔹 Airbnb
     const dataICal = await ical.async.fromURL(icalURL);
-    let reservationsAirbnb = [];
-
     for (let key in dataICal) {
       const evt = dataICal[key];
       if (evt.type === 'VEVENT') {
-        reservationsAirbnb.push({
-          startDate: new Date(evt.start).toISOString(),
-          endDate: new Date(evt.end).toISOString()
-        });
+        for (let d = new Date(evt.start); d < new Date(evt.end); d.setDate(d.getDate() + 1)) {
+          datesBloquées.add(d.toISOString().split('T')[0]);
+        }
       }
     }
 
-    // 🔹 Étape 3 : Vérification chevauchement local
-    // const chevaucheLocal = reservationsLocales.some(r =>
-    //   datesSeChevauchent(r.startDate, r.endDate, nouvelleReservation.startDate, nouvelleReservation.endDate)
-    // );
+    // 🔹 Locales
+    if (fs.existsSync(cheminReservations)) {
+      const reservationsLocales = JSON.parse(fs.readFileSync(cheminReservations, 'utf-8'));
+      for (const r of reservationsLocales) {
+        for (let d = new Date(r.startDate); d < new Date(r.endDate); d.setDate(d.getDate() + 1)) {
+          datesBloquées.add(d.toISOString().split('T')[0]);
+        }
+      }
+    }
 
-    // if (chevaucheLocal) {
-    //   console.log("⛔ Chevauchement détecté avec une réservation locale.");
-    //   return res.status(409).send({ success: false, error: 'Dates déjà réservées (locale)' });
-    // }
+    // 🔹 Vérification si une date de la nouvelle réservation est déjà bloquée
+    const datesDemandées = [];
+    for (let d = new Date(startDate); d < new Date(endDate); d.setDate(d.getDate() + 1)) {
+      datesDemandées.push(d.toISOString().split('T')[0]);
+    }
 
-    // 🔹 Étape 4 : Vérification chevauchement Airbnb
-    // const chevaucheAirbnb = reservationsAirbnb.some(r =>
-    //   datesSeChevauchent(r.startDate, r.endDate, nouvelleReservation.startDate, nouvelleReservation.endDate)
-    // );
+    const conflit = datesDemandées.some(date => datesBloquées.has(date));
+    if (conflit) {
+      console.log("⛔ Conflit détecté : certaines dates sont déjà prises.");
+      return res.status(409).send({ success: false, error: 'Une ou plusieurs dates ne sont plus disponibles.' });
+    }
 
-    // if (chevaucheAirbnb) {
-    //   console.log("⛔ Chevauchement détecté avec une réservation Airbnb.");
-    //   return res.status(409).send({ success: false, error: 'Dates déjà réservées (Airbnb)' });
-    // }
+    // 🔹 Enregistrement
+    let reservationsLocales = [];
+    if (fs.existsSync(cheminReservations)) {
+      reservationsLocales = JSON.parse(fs.readFileSync(cheminReservations, 'utf-8'));
+    }
 
-    // 🔹 Étape 5 : Enregistrement
     reservationsLocales.push(nouvelleReservation);
-
     fs.writeFileSync(cheminReservations, JSON.stringify(reservationsLocales, null, 2));
-    console.log("✅ Réservation enregistrée :", nouvelleReservation);
 
+    console.log("✅ Réservation enregistrée :", nouvelleReservation);
     res.status(200).send({ success: true });
 
   } catch (error) {
@@ -175,6 +171,7 @@ app.post('/add-reservation', async (req, res) => {
     res.status(500).send({ success: false, error: "Erreur interne serveur" });
   }
 });
+
 
 
 app.listen(PORT, () => {
