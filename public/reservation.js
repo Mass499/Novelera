@@ -32,31 +32,35 @@ const cleaningFee = 250;
 function calculateTotal(startStr, endStr) {
     const start = luxon.DateTime.fromISO(startStr);
     const end = luxon.DateTime.fromISO(endStr);
+
     if (start.isValid && end.isValid && end > start) {
         const nights = Math.floor(end.diff(start, 'days').days);
         const base = nights * pricePerNight;
         const subtotal = base + cleaningFee;
-        const taxes = +(subtotal * 0.14975).toFixed(2);  // arrondi à 2 décimales
 
-        // Addition arrondie à 2 décimales — ici on passe par *100, arrondi, puis /100 (méthode fiable)
-        const total = Math.round((subtotal + taxes) * 100) / 100;
+        const tps = +(subtotal * 0.05).toFixed(2);
+        const tvq = +(subtotal * 0.09975).toFixed(2);
+        const total = Math.round((subtotal + tps + tvq) * 100) / 100;
 
-        // Affichage avec toFixed(2) pour avoir toujours 2 chiffres après la virgule
+        // Affichage
         document.getElementById('nightsLine').textContent = `${pricePerNight}$ CAD x ${nights} nuit${nights > 1 ? 's' : ''} = ${base.toFixed(2)}$ CAD`;
         document.getElementById('cleaningFeeLine').textContent = `${cleaningFee.toFixed(2)}$ CAD`;
-        document.getElementById('taxesLine').textContent = `${taxes.toFixed(2)}$ CAD`;
+        document.getElementById('tpsLine').textContent = `${tps.toFixed(2)}$ CAD`;
+        document.getElementById('tvqLine').textContent = `${tvq.toFixed(2)}$ CAD`;
         document.getElementById('totalPrice').textContent = total.toFixed(2);
 
         return total;
     } else {
         document.getElementById('nightsLine').textContent = '';
         document.getElementById('cleaningFeeLine').textContent = '0.00$ CAD';
-        document.getElementById('taxesLine').textContent = '0.00$ CAD';
+        document.getElementById('tpsLine').textContent = '0.00$ CAD';
+        document.getElementById('tvqLine').textContent = '0.00$ CAD';
         document.getElementById('totalPrice').textContent = '0.00';
 
         return 0;
     }
 }
+
 // Initialisation du bouton PayPal
 paypal.Buttons({
     createOrder: function (data, actions) {
