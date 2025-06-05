@@ -15,6 +15,8 @@
     </script>
 </head>
 
+
+
 <body>
   <div id="language-switch" style="position: fixed; top: 10px; right: 10px; z-index: 999;">
     <button onclick="setLanguage('fr')" title="Basculer en français">FR</button>
@@ -46,9 +48,6 @@
       </label>
       <div class="clear-link" onclick="clearDate()" data-i18n="text_353">Effacer</div>
       </label>
-
-      <!-- <button id="calculateBtn" onclick="onCalculateClick()">Calculer</button> -->
-
       <div class="total">
         <p id="nightsLine"></p>
         <p><span data-i18n="text_354">Frais de nettoyage : </span><span id="cleaningFeeLine"> 250$ CAD</span></p>
@@ -57,6 +56,16 @@
         <p>TVQ (9.975%) : <span id="tvqLine">0.00$ CAD</span></p>
         <hr>
         <p><strong>Total : <span id="totalPrice">0</span>$ CAD</strong></p>
+        <div style="display: flex; flex-direction: column; gap: 0.5em;">
+          <label style="display: flex; align-items: center; gap: 0.5em; cursor: pointer; font-size: 16px;">
+            <input type="checkbox" id="acceptConditions" style="width: 18px; height: 18px; accent-color: #5ac8fa;" />
+            J'ai lu et j'accepte les conditions de séjour
+          </label>
+          <a href="javascript:void(0);" onclick="openConditionModal()"
+            style="text-align: center; color: #5ac8fa; font-weight: 500; text-decoration: none;">
+            Conditions d’utilisation
+          </a><br>
+        </div>
 
         <!-- Conteneur du bouton -->
         <div id="paypal-button-container"></div>
@@ -66,17 +75,35 @@
           style="display: none; padding: 20px; margin-top: 20px; background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; border-radius: 5px;">
           Votre réservation a bien été confirmée. Merci !
         </div>
+        
       </div>
-
     </div>
   </section>
 
+  <!-- Modale des modalités -->
+  <!-- Modale avec uniquement le texte -->
+  <div id="conditionModal" class="condition-modal" style="display: none;">
+    <div class="condition-modal-content">
+      <span class="condition-close" onclick="closeConditionModal()">&times;</span>
+      <h2>Modalités de réservation</h2>
+      <div class="condition-modal-body" style="max-height: 60vh; overflow-y: auto; text-align: left;">
+        <p><strong>Conditions générales :</strong></p>
+        <ul>
+          <li>Un dépôt de sécurité de 500$ CAD peut être requis.</li>
+          <li>L’heure d’arrivée est 16h00, l’heure de départ est 11h00.</li>
+          <li>Politique d'annulation : remboursement complet jusqu'à 14 jours avant l’arrivée.</li>
+          <li>Le client est responsable des dommages causés au chalet pendant son séjour.</li>
+          <li>Animaux, fêtes et fumeurs interdits.</li>
+        </ul>
+        <p>En cochant la case, vous acceptez l'ensemble de ces conditions.</p>
+      </div>
+    </div>
+  </div>
 
-
-
-
+  <!-- Scripts -->
   <script src="reservation.js"></script>
   <script src="lang.js"></script>
+
 </body>
 
 </html>

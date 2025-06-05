@@ -95,10 +95,12 @@ app.post('/send-confirmation-email', async (req, res) => {
   }
 });
 
-// Pour verifier que deux dates ne se chevauchent pas
-function datesSeChevauchent(debut1, fin1, debut2, fin2) {
-  return (new Date(debut1) < new Date(fin2)) && (new Date(debut2) < new Date(fin1));
-}
+// // Pour verifier que deux dates ne se chevauchent pas
+// function datesSeChevauchent(debut1, fin1, debut2, fin2) {
+//   return (new Date(debut1) < new Date(fin2)) && (new Date(debut2) < new Date(fin1));
+// }
+
+
 
 // 📝 Enregistrement d’une réservation locale
 app.post('/add-reservation', async (req, res) => {

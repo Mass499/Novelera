@@ -167,6 +167,55 @@ body {
 
 /* Réglements Fin */
 
+/* Condition de séjour Début */
+.condition-modal {
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.condition-modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 600px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    animation: conditionFadeIn 0.3s ease-in-out;
+}
+
+.condition-close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.condition-close:hover {
+    color: black;
+}
+
+@keyframes conditionFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Conditions de séjour Fin */
+
 section {
     padding: 20px 15%;
 }
@@ -619,7 +668,7 @@ button {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background:  #f9ad4a;
+    background: #f9ad4a;
     color: white;
     border: none;
     font-size: 24px;
@@ -716,61 +765,62 @@ footer {
 
 /* Réservation Début */
 .reservation-wrapper {
-      background-color: #fff;
-      max-width: 600px;
-      margin: 50px auto;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    }
+    background-color: #fff;
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
 
-    .reservation-wrapper label {
-      display: block;
-      margin-top: 15px;
-    }
+.reservation-wrapper label {
+    display: block;
+    margin-top: 15px;
+}
 
-    .reservation-wrapper input {
-      padding: 8px;
-      width: 100%;
-      font-size: 16px;
-    }
+.reservation-wrapper input {
+    padding: 8px;
+    width: 100%;
+    font-size: 16px;
+}
 
-    .clear-link {
-      display: inline-block;
-      margin-top: 5px;
-      color: #007BFF;
-      cursor: pointer;
-      font-size: 14px;
-      text-decoration: underline;
-    }
+.clear-link {
+    display: inline-block;
+    margin-top: 5px;
+    color: #007BFF;
+    cursor: pointer;
+    font-size: 14px;
+    text-decoration: underline;
+}
 
-    .total {
-      margin-top: 20px;
-      font-size: 16px;
-    }
+.total {
+    margin-top: 20px;
+    font-size: 16px;
+}
 
-    .total p {
-      margin: 5px 0;
-    }
+.total p {
+    margin: 5px 0;
+}
 
-    .total hr {
-      margin: 10px 0;
-    }
+.total hr {
+    margin: 10px 0;
+}
 
-    #calculateBtn {
-      margin-top: 15px;
-      padding: 10px 20px;
-      font-size: 16px;
-      background-color: #007BFF;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-    }
+#calculateBtn {
+    margin-top: 15px;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
 
-    #calculateBtn:hover {
-      background-color: #0056b3;
-    }
+#calculateBtn:hover {
+    background-color: #0056b3;
+}
+
 /* Réservation Fin*/
 
 
@@ -1128,6 +1178,7 @@ footer {
     color: white;
     margin-top: 10px;
 }
+
 .viewer .nav-btn {
     position: absolute;
     top: 50%;
@@ -1138,27 +1189,32 @@ footer {
     padding: 10px;
     cursor: pointer;
 }
+
 .nav-btn {
- position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(255,255,255,0.8);
-  border: none;
-  font-size: 2rem;
-  cursor: pointer;
-  z-index: 2;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.8);
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    z-index: 2;
 }
+
 #viewer {
-  position: relative;
-  text-align: center;
-  padding: 20px;
+    position: relative;
+    text-align: center;
+    padding: 20px;
 }
+
 #prevBtn {
-  left: 30px; /* plus loin du bord gauche */
+    left: 30px;
+    /* plus loin du bord gauche */
 }
 
 #nextBtn {
-  right: 30px; /* plus loin du bord droit */
+    right: 30px;
+    /* plus loin du bord droit */
 }
 
 

@@ -10,8 +10,8 @@ function closeNav() {
     document.querySelector(".links").style.width = "0%";
     document.querySelector("body").style.overflow = "unset";
 
-    const paypal = document.getElementById("paypal-button-container");
-    if (paypal) paypal.classList.remove("hide-paypal");
+    // const paypal = document.getElementById("paypal-button-container");
+    // if (paypal) paypal.classList.remove("hide-paypal");
 }
 // Fermer le menu quand on clique sur un lien
 document.addEventListener("DOMContentLoaded", function () {
@@ -64,6 +64,13 @@ function calculateTotal(startStr, endStr) {
 // Initialisation du bouton PayPal
 paypal.Buttons({
     createOrder: function (data, actions) {
+        // Vérifier si la case est cochée
+        const accept = document.getElementById('acceptConditions').checked;
+        if (!accept) {
+            alert("Veuillez accepter les modalités avant de payer.");
+            return; // Arrête la création de la commande
+        }
+
         // Récupère le total au moment du clic
         let total = parseFloat(document.getElementById('totalPrice').textContent);
         if (isNaN(total) || total <= 0) {
@@ -79,6 +86,7 @@ paypal.Buttons({
             }]
         });
     },
+
     onApprove: async function (data, actions) {
         try {
             const details = await actions.order.capture();
@@ -120,28 +128,22 @@ paypal.Buttons({
 
                 // On garde en mémoire que la réservation a été confirmée
                 localStorage.setItem('reservationConfirmed', 'true');
-
             }
-
 
         } catch (err) {
             console.error(err);
             alert("Une erreur est survenue pendant le traitement de votre réservation. Merci de réessayer.");
         }
     }
-
-
 }).render('#paypal-button-container');
-
-
-
 // paypal Fin
 
 function clearDate() {
     document.getElementById('dateRange').value = '';
     document.getElementById('nightsLine').textContent = '';
     document.getElementById('cleaningFeeLine').textContent = '0$ CAD';
-    document.getElementById('taxesLine').textContent = '0$ CAD';
+    document.getElementById('tpsLine').textContent = '0.00$ CAD';
+    document.getElementById('tvqLine').textContent = '0.00$ CAD';
     document.getElementById('totalPrice').textContent = '0';
     if (picker) picker.clearSelection();
 }
@@ -198,7 +200,38 @@ window.addEventListener('DOMContentLoaded', () => {
             localStorage.removeItem('reservationConfirmed');
         }
     }
+
+    // ✅ Réinitialiser les champs date et total à chaque rechargement
+    document.getElementById('dateRange').value = '';
+    document.getElementById('nightsLine').textContent = '';
+    document.getElementById('cleaningFeeLine').textContent = '0.00$ CAD';
+    document.getElementById('tpsLine').textContent = '0.00$ CAD';
+    document.getElementById('tvqLine').textContent = '0.00$ CAD';
+    document.getElementById('totalPrice').textContent = '0.00';
+
+    // Réinitialiser le sélecteur de date s'il est déjà initialisé
+    if (picker) picker.clearSelection();
 });
+
+// Conditions
+function openConditionModal() {
+    const modal = document.getElementById("conditionModal");
+    if (modal) modal.style.display = "block";
+}
+
+function closeConditionModal() {
+    const modal = document.getElementById("conditionModal");
+    if (modal) modal.style.display = "none";
+}
+
+// Fermer modale si clic à l'extérieur du contenu
+window.addEventListener("click", function (event) {
+    const modal = document.getElementById("conditionModal");
+    if (event.target === modal) {
+        modal.style.display = "none";
+    }
+});
+
 
 
 initPicker();
