@@ -15,13 +15,7 @@
     </script>
 </head>
 
-
-
 <body>
-  <div id="language-switch" style="position: fixed; top: 10px; right: 10px; z-index: 999;">
-    <button onclick="setLanguage('fr')" title="Basculer en français">FR</button>
-    <button onclick="setLanguage('en')" title="Basculer en français">EN</button>
-  </div>
 
   <!-- Barre de navigation -->
   <section class="home">
@@ -37,6 +31,8 @@
         <li><a href="index.html#temoignages" data-i18n="text_75">Témoignages</a></li>
         <li><a href="reservation.html" data-i18n="text_76">Réservez</a></li>
         <li><a href="index.html#carte" data-i18n="text_77">Contact</a></li>
+        <li><a id="btn-fr" onclick="switchTo('fr')">FR</a></li>
+        <li><a id="btn-en" onclick="switchTo('en')" style="display: none;">EN</a></li>
       </ul>
     </div>
 
@@ -45,6 +41,7 @@
       <p data-i18n="text_351">Choisir date d'arrivée et de départ :</p>
       <label>
         <input data-i18n="text_352" id="dateRange" type="text" placeholder="Choisir dates">
+        <div id="dateErrorBox" style="display: none;" class="error-box"></div>
       </label>
       <div class="clear-link" onclick="clearDate()" data-i18n="text_353">Effacer</div>
       </label>
@@ -59,13 +56,14 @@
         <div style="display: flex; flex-direction: column; gap: 0.5em;">
           <label style="display: flex; align-items: center; gap: 0.5em; cursor: pointer; font-size: 16px;">
             <input type="checkbox" id="acceptConditions" style="width: 18px; height: 18px; accent-color: #5ac8fa;" />
-            J'ai lu et j'accepte les conditions de séjour
+            <span data-i18n="text_355">J'ai lu et j'accepte les conditions de séjour</span>
           </label>
           <a href="javascript:void(0);" onclick="openConditionModal()"
-            style="text-align: center; color: #5ac8fa; font-weight: 500; text-decoration: none;">
+            style="text-align: center; color: #5ac8fa; font-weight: 500; text-decoration: none;" data-i18n="text_356">
             Conditions d’utilisation
           </a><br>
         </div>
+
 
         <!-- Conteneur du bouton -->
         <div id="paypal-button-container"></div>
@@ -75,7 +73,7 @@
           style="display: none; padding: 20px; margin-top: 20px; background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; border-radius: 5px;">
           Votre réservation a bien été confirmée. Merci !
         </div>
-        
+
       </div>
     </div>
   </section>
@@ -85,16 +83,301 @@
   <div id="conditionModal" class="condition-modal" style="display: none;">
     <div class="condition-modal-content">
       <span class="condition-close" onclick="closeConditionModal()">&times;</span>
-      <h2>Modalités de réservation</h2>
+      <h2>Modalités de réservation</h2> <br>
       <div class="condition-modal-body" style="max-height: 60vh; overflow-y: auto; text-align: left;">
-        <p><strong>Conditions générales :</strong></p>
         <ul>
-          <li>Un dépôt de sécurité de 500$ CAD peut être requis.</li>
-          <li>L’heure d’arrivée est 16h00, l’heure de départ est 11h00.</li>
-          <li>Politique d'annulation : remboursement complet jusqu'à 14 jours avant l’arrivée.</li>
-          <li>Le client est responsable des dommages causés au chalet pendant son séjour.</li>
-          <li>Animaux, fêtes et fumeurs interdits.</li>
+          <li><strong data-i18n="text_360">Politique d’annulation</strong><br>
+            <ul>
+              <li data-i18n="text_361">Pour toute annulation faite par le locataire moins de 30 jours avant la période
+                de location, aucun remboursement ne sera effectué.</li><br>
+              <li data-i18n="text_362">Des frais administratifs seront chargés pour reporter le séjour.</li><br>
+              <li data-i18n="text_363">Aucun crédit ne sera accordé pour les départs anticipés.</li><br>
+              <li data-i18n="text_364">Dans le cas où le gestionnaire doit annuler une réservation pour des raisons qui
+                lui sont propres, un remboursement complet sera effectué au locataire et aucun montant supplémentaire
+                pour dommages ou pertes subis ne pourra être réclamé au gestionnaire.</li><br>
+            </ul>
+          </li><br>
         </ul>
+        <ul>
+          <li><strong data-i18n="text_365">Respect de la propriété et des autres (Aucun Party permis)</strong><br>
+            <ul>
+              <li data-i18n="text_366">Le locataire est responsable du chalet loué et de son contenu.</li><br>
+              <li data-i18n="text_367">Il assume la pleine et entière responsabilité des personnes à qui il permet
+                l’accès.</li><br>
+              <li data-i18n="text_368">Les occupants à qui le locataire permet l’accès doivent se conduire de façon à ne
+                pas troubler les autres résidents des immeubles avoisinants dans la jouissance normale des lieux.</li><br>
+              <br>
+              <li data-i18n="text_369">Les bruits susceptibles de troubler la paix et le bien-être du voisinage sont
+                interdits sous peine d’amende et d’expulsion des occupants sans aucun remboursement.</li><br>
+              <li data-i18n="text_370">Entre 22h et 8h, nous vous demandons d’éteindre la musique et de réduire le bruit
+                à l’extérieur.</li><br>
+              <li data-i18n="text_371">Ce chalet n’est pas pour faire de gros party. Des détecteurs de décibels
+                intérieurs et extérieurs sont en place. Une expulsion immédiate sans remboursement pourra être appliquée
+                en cas de non-respect.</li><br>
+            </ul>
+          </li><br>
+        </ul>
+        <ul>
+          <li data-i18n="text_372">Capacité d’accueil maximale</li><br>
+          <li data-i18n="text_373">L’établissement peut accueillir un maximum de 14 personnes, dont un maximum de 8
+            adultes (16 ans et plus).</li><br>
+          <li data-i18n="text_374">Les enfants de moins de 16 ans ne sont pas comptés dans la limite des adultes, tant
+            que le total ne dépasse pas la capacité d’accueil maximale du chalet.</li><br>
+          <li data-i18n="text_375">Lors du séjour, le nombre de personnes présentes ne doit en aucun cas excéder le
+            nombre mentionné lors de la réservation et autorisé sur votre confirmation.</li><br>
+          <li data-i18n="text_376">Le dépassement du nombre de personnes permises sans entente écrite entraînera des
+            pénalités, voire l’expulsion immédiate sans remboursement.</li><br>
+          <li data-i18n="text_377">Le non-respect de cette clause ou la perte de contrôle d’un groupe autorisé ou non
+            pourra mener à une expulsion immédiate sans remboursement et à des poursuites judiciaires d’un minimum de 10
+            000 $ pour couvrir les dommages moraux causés aux propriétaires et au voisinage. Les dommages matériels s’y
+            ajouteront.</li><br>
+        </ul>
+        <ul>
+          <li data-i18n="text_378">Caméra sur place</li><br>
+          <li data-i18n="text_379">Des caméras de sécurité sont installées à l’extérieur du chalet.</li><br>
+          <li data-i18n="text_380">Aucune caméra ne pointe vers la section spa, sauna ou piscine, afin de respecter la
+            vie privée.</li><br>
+          <li data-i18n="text_381">Il est interdit de déplacer ou de débrancher les caméras. Toute altération sera
+            considérée comme une tentative de cacher des éléments importants et entraînera la fin immédiate de la
+            location sans remboursement.</li><br>
+        </ul>
+        <ul>
+          <li data-i18n="text_382">Établissement non-fumeur</li><br>
+          <li data-i18n="text_383">Il est interdit de fumer ou de vapoter à l’intérieur du chalet.</li><br>
+          <li data-i18n="text_384">Il est permis de fumer à l’extérieur, à plus de 9 mètres des portes extérieures.</li><br>
+          <li data-i18n="text_385">Toute infraction à cette clause entraîne une amende de 1000 $.</li><br>
+        </ul>
+        <ul>
+          <li data-i18n="text_386">Mégots</li><br>
+          <li data-i18n="text_387">À l’extérieur, veuillez disposer des mégots de cigarette dans les contenants prévus à
+            cet effet.</li><br>
+          <li data-i18n="text_388">Si l’équipe retrouve plusieurs mégots au sol, 100 $ seront déduits du dépôt de
+            sécurité pour le nettoyage supplémentaire.</li><br>
+        </ul>
+        <ul>
+          <li data-i18n="text_389">Les animaux de compagnie</li><br>
+          <li data-i18n="text_390">Tout animal de compagnie est strictement interdit, à l'intérieur comme à l'extérieur,
+            sauf si le gestionnaire l'a autorisé par écrit et qu'il est inscrit sur la confirmation.</li><br>
+          <li data-i18n="text_391">Toute infraction entraînera une expulsion des locataires sans remboursement.</li><br>
+        </ul>
+        <ul>
+          <li data-i18n="text_392">Feu extérieur</li><br>
+          <li data-i18n="text_393">Il est permis d’allumer un feu à l'extérieur seulement dans le foyer réservé à cet
+            effet.</li><br>
+          <li data-i18n="text_394">Consultez le site http://sopfeu.qc.ca/ pour vérifier l'indice « stop feu » (en zone
+            bleue ou verte) avant d'allumer un feu.</li><br>
+          <li data-i18n="text_395">Un feu extérieur ne doit jamais être laissé sans surveillance. Assurez-vous que le
+            feu est complètement éteint avant de rentrer.</li><br>
+          <li data-i18n="text_396">Il est interdit de ramasser du bois, des herbes, des feuilles ou d’autres éléments
+            naturels vivants sur le terrain pour les brûler.</li><br>
+          <li data-i18n="text_397">Un chariot ou bac de bûches est inclus dans les frais de location. Si vous en
+            manquez, des bacs supplémentaires sont disponibles au coût de 20 $ chacun.</li><br>
+        </ul>
+        <ul>
+          <li data-i18n="text_398">Stationnement</li><br>
+          <li data-i18n="text_399">Il est interdit de se stationner sur la pelouse. Veuillez utiliser les espaces
+            réservés à cet effet.</li><br>
+          <li data-i18n="text_400">En hiver, nous recommandons fortement un véhicule 4x4 ou 4 roues motrices. Nous ne
+            sommes pas responsables des frais de remorquage.</li><br>
+          <li data-i18n="text_401">En été, un véhicule 2 roues motrices ne pose aucun problème.</li><br>
+        </ul>
+        <ul>
+          <li data-i18n="text_402">L’usage du spa (si applicable)</li><br>
+          <li data-i18n="text_403">Le locataire s'engage à suivre les consignes affichées dans le chalet ou près du spa.
+          </li><br>
+          <li data-i18n="text_404">Toujours prendre une douche avant d'entrer dans le spa pour éviter d'endommager les
+            tuyaux par des huiles ou crèmes.</li><br>
+          <li data-i18n="text_405">Aucune aromathérapie ou produit non fourni n'est permis.</li><br>
+          <li data-i18n="text_406">Bien refermer les jets et le couvercle après chaque utilisation.</li><br>
+          <li data-i18n="text_407">Aucun contenant cassable ni nourriture n'est permis dans le spa.</li><br>
+          <li data-i18n="text_408">Des pénalités peuvent être chargées en cas de bris, de pièce manquante ou lorsque
+            l'eau du spa démontre de la négligence.</li><br>
+        </ul>
+        <ul>
+          <li data-i18n="text_409">L’usage du foyer intérieur (si applicable)</li><br>
+          <li data-i18n="text_410">Au bois</li><br>
+          <li data-i18n="text_411">Le foyer intérieur au bois sert de chauffage d'appoint ou pour créer une ambiance.
+          </li><br>
+          <li data-i18n="text_412">La porte du foyer doit demeurer fermée en tout temps lorsqu'il y a un feu et au
+            départ du chalet.</li><br>
+          <li data-i18n="text_413">Ne pas placer d'objets dessus ou trop à proximité.</li><br>
+          <li data-i18n="text_414">Bien suivre les directives pour que la fumée s'évacue correctement.</li><br>
+          <li data-i18n="text_415">Tout dommage causé par l'utilisation du foyer sera à la charge du locataire.</li><br>
+
+          <li data-i18n="text_416">Au gaz</li><br>
+          <li data-i18n="text_417">Le foyer intérieur au gaz sert de chauffage d'appoint ou pour créer une ambiance.
+          </li><br>
+          <li data-i18n="text_418">Ne pas placer d'objets dessus ou trop près.</li><br>
+          <li data-i18n="text_419">Bien suivre les directives pour allumer et éteindre.</li><br>
+          <li data-i18n="text_420">Toujours éteindre le foyer après chaque utilisation et avant de quitter la propriété.
+          </li><br>
+        </ul>
+        <ul>
+          <li data-i18n="text_421">L'usage du BBQ (si applicable)</li><br>
+          <li data-i18n="text_422">Veuillez nettoyer le BBQ après chaque usage et remettre la housse protectrice.</li><br>
+          <li data-i18n="text_423">Des frais de 45 $ seront facturés en cas de négligence manifeste.</li><br>
+          <li data-i18n="text_424">Le BBQ est disponible de mai à octobre inclusivement.</li><br>
+          <li data-i18n="text_425">Pour les BBQ au gaz, le propane est fourni. Pour les BBQ aux briquettes, veuillez
+            apporter vos briquettes.</li><br>
+          <li data-i18n="text_426">Vérifiez la description du chalet pour connaître le type de BBQ fourni.</li><br>
+        </ul>
+        <ul>
+          <li data-i18n="text_427">L'usage des toilettes et de la plomberie</li><br>
+          <li data-i18n="text_428">Le chalet est muni d'une fosse septique.</li><br>
+          <li data-i18n="text_429">Ne rien jeter dans les lavabos, toilettes, baignoires ou douches de nature à obstruer
+            les canalisations (tampons, serviettes sanitaires, lingettes, etc.).</li><br>
+          <li data-i18n="text_430">Les produits d'hygiène personnelle doivent être jetés aux ordures.</li><br>
+          <li data-i18n="text_431">Le locataire est responsable de tous dommages causés par un refoulement dû à la
+            négligence ou au non-respect de cette clause.</li><br>
+        </ul>
+        <ul>
+          <li data-i18n="text_432">L'usage de feux d'artifice</li><br>
+          <li data-i18n="text_433">L'usage de feux d'artifice est formellement interdit.</li><br>
+          <li data-i18n="text_434">En cas de non-respect, expulsion immédiate sans remboursement.</li><br>
+        </ul>
+        <ul>
+          <li data-i18n="text_435">L'usage d'armes</li><br>
+          <li data-i18n="text_436">Toute arme (arme à feu, air comprimé, arc, arbalète, paintball, etc.) est interdite.
+          </li><br>
+          <li data-i18n="text_437">En cas d'usage, expulsion immédiate sans remboursement.</li><br>
+        </ul>
+        <ul>
+          <li data-i18n="text_438">L'usage de drone</li><br>
+          <li data-i18n="text_439">L'utilisation d'un drone ou tout autre objet télécommandé volant est accepté, sous
+            réserve de respecter la réglementation en vigueur (lois sur la protection de la vie privée et règles de
+            sécurité).</li><br>
+        </ul>
+        <ul>
+          <li data-i18n="text_440">La gestion des déchets</li><br>
+          <li data-i18n="text_441">Durant votre séjour, ne jamais sortir un sac à ordures sans le mettre dans les bacs
+            prévus à cet effet.</li><br>
+          <li data-i18n="text_442">Séparez convenablement recyclage et ordures.</li><br>
+          <li data-i18n="text_443">Placez les bacs sur le bord de la route avant votre départ.</li><br>
+        </ul>
+        <ul>
+          <li data-i18n="text_444">Véhicules récréatifs</li><br>
+          <li data-i18n="text_445">Il est strictement interdit d'installer des tentes, roulottes, tentes-roulottes ou
+            tout autre véhicule récréatif sur le terrain ou aux alentours.</li><br>
+          <li data-i18n="text_446">Il est prohibé d'utiliser des bâtiments accessoires à des fins d'hébergement.</li><br>
+        </ul>
+        <ul>
+          <li data-i18n="text_447">Risque de blessure et de mort</li><br>
+          <li data-i18n="text_448">Le terrain peut comporter des pentes abruptes ou des falaises présentant un risque de
+            blessure sérieuse ou de mort.</li><br>
+          <li data-i18n="text_449">Les locataires sont responsables de leur santé et de leur sécurité.</li><br>
+          <li data-i18n="text_450">Le gestionnaire fait tout en son pouvoir pour assurer la sécurité, mais se dégage de
+            toute responsabilité quant aux accidents survenus sur le site.</li><br>
+          <li data-i18n="text_451">Soyez prudents et surveillez vos enfants en tout temps.</li><br>
+        </ul>
+        <ul>
+          <li data-i18n="text_452">Équipe d'entretien — Accès à la propriété</li><br>
+          <li data-i18n="text_453">Il est possible que le propriétaire, le gestionnaire ou des employés de maintenance
+            se rendent sur le site pour des vérifications ou de l’entretien durant le séjour.</li><br>
+          <li data-i18n="text_454">Ces interventions seront les plus discrètes possible.</li><br>
+        </ul>
+        <ul>
+          <li data-i18n="text_455">En cas de défectuosité</li><br>
+          <li data-i18n="text_456">Le locataire doit aviser immédiatement le gestionnaire de toute défectuosité ou bris
+            d'équipement, de meubles ou de la propriété.</li><br>
+          <li data-i18n="text_457">Toute utilisation abusive ou non attribuable à l'usure normale (bris, taches,
+            dommages) sera aux frais du locataire.</li><br>
+        </ul>
+        <ul>
+          <li data-i18n="text_458">Lors d'une averse de neige</li><br>
+          <li data-i18n="text_459">Une pelle et du sable ou du sel avec gravier antidérapant sont mis à votre
+            disposition.</li><br>
+          <li data-i18n="text_460">Le tracteur de déneigement passera deux fois ; veuillez déplacer vos véhicules entre
+            les deux passages pour faciliter le déneigement.</li><br>
+        </ul>
+        <ul>
+          <li data-i18n="text_461">À votre départ</li><br>
+          <li data-i18n="text_462">Le locataire s'engage à laisser le chalet, le terrain, les meubles et les accessoires
+            dans le même état qu'à l’arrivée. Les tâches minimales à effectuer avant de quitter sont :</li><br>
+          <li data-i18n="text_463">• Sortir les déchets et le recyclage à la station de déchets ou dans les bacs prévus
+            à cet effet.</li><br>
+          <li data-i18n="text_464">• Ne pas laisser de déchets dans un sac à l'extérieur (risque d'attirer des animaux).
+          </li><br>
+          <li data-i18n="text_465">• Ranger la cuisine et replacer la vaisselle propre à l'endroit approprié.</li><br>
+          <li data-i18n="text_466">• Vider le garde-manger, le réfrigérateur et le congélateur (aucune nourriture ne
+            doit y rester).</li><br>
+          <li data-i18n="text_467">• Déposer les serviettes et draps utilisés près de la buanderie.</li><br>
+          <li data-i18n="text_468">• Laisser les couettes et housses assemblées (l'équipe sur place s'occupe de leur
+            entretien).</li><br>
+          <li data-i18n="text_469">• Fermer les fenêtres et verrouiller toutes les portes.</li><br>
+          <li data-i18n="text_470">L'heure de départ maximale est 11 h. Des frais additionnels pourraient s'appliquer en
+            cas de retard, à moins d'une entente écrite préalable avec Villa Baraka. Si l'horaire le permet, une
+            prolongation peut être accordée (frais supplémentaires possibles).</li><br>
+        </ul>
+        <ul>
+          <li data-i18n="text_471">Perte, vol ou dommage aux locataires</li><br>
+          <li data-i18n="text_472">Le locataire et ses invités sont responsables de leurs biens, de leur santé et de
+            leur sécurité.</li><br>
+          <li data-i18n="text_473">Le gestionnaire n'est aucunement responsable des pertes, vols ou bris à l'égard des
+            effets personnels survenus lors du séjour.</li><br>
+          <li data-i18n="text_474">En cas d'oubli d'effets personnels au départ, des frais de gestion de 40 $ seront
+            chargés, en plus des frais postaux pour l’expédition de ces objets.</li><br>
+        </ul>
+        <ul>
+          <li data-i18n="text_475">Arrêt de contrat et amendes</li><br>
+          <li data-i18n="text_476">Les locataires doivent respecter les règlements, les lieux, l'ameublement et le
+            voisinage.</li><br>
+          <li data-i18n="text_477">En cas de non-respect, un seul avis formel sera émis (par courriel ou téléphone) pour
+            indiquer le règlement enfreint et l'amende applicable (entre 300 $ et 10 000 $) ou l'éventualité d'une
+            expulsion.</li><br>
+          <li data-i18n="text_478">Le locataire devra se conformer immédiatement.</li><br>
+          <li data-i18n="text_479">Si aucune réponse ou collaboration n'est reçue dans l'heure suivant l'envoi de
+            l'avis, les procédures (amende ou expulsion) seront appliquées sans remboursement.</li><br>
+          <li data-i18n="text_480">Le montant de l'amende ou des frais sera à l'entière discrétion du gestionnaire.</li><br>
+          <li data-i18n="text_481">Liste des charges supplémentaires</li><br>
+          <li data-i18n="text_482">• 100 $/h pour les heures de ménage supplémentaires. Si ce temps excède 3 h, des
+            frais de 750 $ seront déduits du dépôt de sécurité.</li><br>
+          <li data-i18n="text_483">• 200 $ si le spa doit être vidé en raison de négligence.</li><br>
+          <li data-i18n="text_484">• Bris et/ou vol d'objet : Le montant retenu varie selon la valeur de l'objet.</li><br>
+          <li data-i18n="text_485">• Bris ou dommage à la bâtisse et l'ameublement : Le dépôt de sécurité sera conservé
+            entièrement jusqu'à la réparation ou le remplacement. Des frais administratifs peuvent s'ajouter.</li><br>
+        </ul>
+        <ul>
+          <li data-i18n="text_486">Dépôt de sécurité (le cas échéant)</li><br>
+          <li data-i18n="text_487">Un dépôt de sécurité de [montant] $ est exigé pour garantir le respect du présent
+            contrat et couvrir d'éventuels dommages.</li><br>
+          <li data-i18n="text_488">Le dépôt de sécurité sera remboursé dans un délai de [Nombre de jours] après le
+            départ, sous réserve d'une inspection des lieux.</li><br>
+          <li data-i18n="text_489">En cas de dommages ou d'infraction au règlement, tout ou partie du dépôt pourra être
+            retenu.</li><br>
+        </ul>
+        <ul>
+          <li data-i18n="text_490">Confirmation de réservation</li><br>
+          <li data-i18n="text_491">La réservation n'est considérée confirmée qu'à la réception du paiement initial (ou
+            du dépôt, selon les modalités convenues).</li><br>
+          <li data-i18n="text_492">Le non-paiement dans les délais fixés peut entraîner l'annulation de la réservation
+            par le Gestionnaire.</li><br>
+        </ul>
+        <ul>
+          <li data-i18n="text_493">Clause de force majeure</li><br>
+          <li data-i18n="text_494">Le Gestionnaire et le Locataire ne pourront être tenus responsables d'un manquement
+            ou d'un retard dans l'exécution de leurs obligations si ce manquement ou ce retard résulte d'une force
+            majeure (ex. : catastrophes naturelles, pandémies, conflits armés, etc.).</li><br>
+        </ul>
+        <ul>
+  <li data-i18n="text_495">Clause de modification du contrat</li><br>
+  <li data-i18n="text_496">Toute modification au présent contrat doit être effectuée par écrit et signée par les deux parties, ou confirmée par courriel.</li><br>
+
+  <li data-i18n="text_497">Langue et juridiction</li><br>
+  <li data-i18n="text_498">Le présent contrat est régi par les lois de la Province de Québec.</li><br>
+  <li data-i18n="text_499">En cas de litige, les tribunaux du district judiciaire où est situé l'immeuble seront compétents, à moins d'un accord différent entre les Parties.</li><br>
+  <li data-i18n="text_500">Le présent contrat est rédigé en français. En cas de différence d'interprétation entre une version en langue étrangère et la version française, la version française prévaudra.</li><br>
+
+  <li data-i18n="text_501" style="margin-top: 1em; font-weight: bold;">SIGNATURES</li><br>
+  <li data-i18n="text_502">En signant ci-dessous, le Locataire déclare avoir lu et compris l’ensemble des clauses du présent contrat et s'engage à les respecter.</li><br>
+  <li data-i18n="text_503">Le Gestionnaire et le Locataire conviennent que ce contrat constitue l'intégralité de leur entente.</li><br>
+</ul>
+
+
+
+
+
+
+
         <p>En cochant la case, vous acceptez l'ensemble de ces conditions.</p>
       </div>
     </div>

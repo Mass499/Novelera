@@ -9,9 +9,6 @@ function openNav() {
 function closeNav() {
     document.querySelector(".links").style.width = "0%";
     document.querySelector("body").style.overflow = "unset";
-
-    // const paypal = document.getElementById("paypal-button-container");
-    // if (paypal) paypal.classList.remove("hide-paypal");
 }
 // Fermer le menu quand on clique sur un lien
 document.addEventListener("DOMContentLoaded", function () {
@@ -135,6 +132,7 @@ paypal.Buttons({
             alert("Une erreur est survenue pendant le traitement de votre réservation. Merci de réessayer.");
         }
     }
+
 }).render('#paypal-button-container');
 // paypal Fin
 
@@ -145,12 +143,13 @@ function clearDate() {
     document.getElementById('tpsLine').textContent = '0.00$ CAD';
     document.getElementById('tvqLine').textContent = '0.00$ CAD';
     document.getElementById('totalPrice').textContent = '0';
+    document.getElementById('acceptConditions').checked = false;
     if (picker) picker.clearSelection();
 }
 // Définir la base URL du backend selon l'environnement
 const backendUrl = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
     ? 'http://localhost:3000'
-    : 'https://chalet-novelera.onrender.com/'; // Remplace par ton URL Render ici
+    : 'https://novelera.onrender.com/'; // Remplace par ton URL Render ici
 
 async function getBlockedDates() {
     try {
@@ -181,11 +180,41 @@ async function initPicker() {
         setup: (picker) => {
             picker.on('selected', (startDate, endDate) => {
                 if (startDate && endDate) {
-                    calculateTotal(startDate.format('YYYY-MM-DD'), endDate.format('YYYY-MM-DD'));
+                    const start = luxon.DateTime.fromISO(startDate.format('YYYY-MM-DD'));
+                    const end = luxon.DateTime.fromISO(endDate.format('YYYY-MM-DD'));
+
+                    let isValid = true;
+                    for (let d = start; d < end; d = d.plus({ days: 1 })) {
+                        const dateStr = d.toFormat('yyyy-MM-dd');
+                        if (lockedDates.includes(dateStr)) {
+                            isValid = false;
+                            break;
+                        }
+                    }
+
+                    if (!isValid) {
+                        showDateError("❌ Cette plage contient des dates déjà réservées,This date range includes already booked dates");
+                        picker.clearSelection();
+                        clearDate();
+                    } else {
+                        hideDateError();
+                        calculateTotal(start.toISODate(), end.toISODate());
+                    }
                 }
             });
         }
     });
+}
+
+function showDateError(message) {
+    const errorBox = document.getElementById('dateErrorBox');
+    errorBox.textContent = message;
+    errorBox.style.display = 'block';
+}
+
+function hideDateError() {
+    const errorBox = document.getElementById('dateErrorBox');
+    errorBox.style.display = 'none';
 }
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -208,22 +237,23 @@ window.addEventListener('DOMContentLoaded', () => {
     document.getElementById('tpsLine').textContent = '0.00$ CAD';
     document.getElementById('tvqLine').textContent = '0.00$ CAD';
     document.getElementById('totalPrice').textContent = '0.00';
+    document.getElementById('acceptConditions').checked = false;
 
     // Réinitialiser le sélecteur de date s'il est déjà initialisé
     if (picker) picker.clearSelection();
 });
+
+initPicker();
 
 // Conditions
 function openConditionModal() {
     const modal = document.getElementById("conditionModal");
     if (modal) modal.style.display = "block";
 }
-
 function closeConditionModal() {
     const modal = document.getElementById("conditionModal");
     if (modal) modal.style.display = "none";
 }
-
 // Fermer modale si clic à l'extérieur du contenu
 window.addEventListener("click", function (event) {
     const modal = document.getElementById("conditionModal");
@@ -231,7 +261,3 @@ window.addEventListener("click", function (event) {
         modal.style.display = "none";
     }
 });
-
-
-
-initPicker();

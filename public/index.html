@@ -13,10 +13,6 @@
 </head>
 
 <body>
-    <div id="language-switch" style="position: fixed; top: 10px; right: 10px; z-index: 999;">
-        <button onclick="setLanguage('fr')">FR</button>
-        <button onclick="setLanguage('en')">EN</button>
-    </div>
 
     <!-- BOÎTE DE DIALOGUE (Descriptions) -->
     <div class="modal-overlay" id="modalOverlay" style="display: none;">
@@ -196,27 +192,27 @@
                 <li data-i18n="text_178">Le calme du secteur est une priorité.</li>
                 <li data-i18n="text_179">Aucun bruit excessif, rassemblement bruyant ou fête ne sera toléré.</li>
                 <li data-i18n="text_180">Silence requis à l’extérieur dès 23h00.</li>
-            </ul>
+            </ul><br>
 
             <p><strong data-i18n="text_181">🐶 Animaux &amp; 🚭 Fumée</strong></p>
             <ul>
                 <li data-i18n="text_182">Animaux non admis (sauf exception préautorisée).</li>
                 <li data-i18n="text_183">Interdiction de fumer à l’intérieur du chalet en tout temps.</li>
-            </ul>
+            </ul><br>
 
             <p><strong data-i18n="text_184">♨️ Spa / Jacuzzi</strong></p>
             <ul>
                 <li data-i18n="text_185">Aucun contenant en verre permis dans ou autour du spa.</li>
                 <li data-i18n="text_186">Ne pas vider le spa.</li>
                 <li data-i18n="text_187">Des frais seront exigés pour tout bris de verre dans ou près du spa.</li>
-            </ul>
+            </ul><br>
 
             <p><strong data-i18n="text_188">🧼 Entretien et propreté</strong></p>
             <ul>
                 <li data-i18n="text_189">Laissez les lieux dans le même état qu’à votre arrivée.</li>
                 <li data-i18n="text_190">Vaisselle propre et rangée.</li>
                 <li data-i18n="text_191">Ordures déposées dans les bacs extérieurs, tri respecté.</li>
-            </ul>
+            </ul><br>
 
             <p><strong data-i18n="text_192">🛶 Accès au lac</strong></p>
             <ul>
@@ -224,20 +220,20 @@
                 <li data-i18n="text_194">Utilisation exclusive des embarcations fournies.</li>
                 <li data-i18n="text_195">Aucune embarcation personnelle autorisée.</li>
                 <li data-i18n="text_196">La pêche est interdite.</li>
-            </ul>
+            </ul><br>
 
             <p><strong data-i18n="text_197">📺 &amp; 🔥 Confort et équipements</strong></p>
             <ul>
                 <li data-i18n="text_198">Télévisions intelligentes, Wi-Fi rapide.</li>
                 <li data-i18n="text_199">Foyer électrique intérieur.</li>
                 <li data-i18n="text_200">Laveuse, sécheuse, lave-vaisselle à votre disposition.</li>
-            </ul>
+            </ul><br>
 
             <p><strong data-i18n="text_201">📦 Inclus pour bien commencer</strong></p>
             <ul>
                 <li data-i18n="text_202">Papier toilette, savon, sacs poubelle, savon à vaisselle.</li>
                 <li data-i18n="text_203">Machine à café.</li>
-            </ul>
+            </ul><br>
 
             <p><strong data-i18n="text_204">⚠️ Sécurité &amp; responsabilité</strong></p>
             <ul>
@@ -245,14 +241,14 @@
                 <li data-i18n="text_206">Pièce d’identité avec adresse exigée.</li>
                 <li data-i18n="text_207">Locataire principal 18 ans et plus.</li>
                 <li data-i18n="text_208">Dégradations = frais possibles.</li>
-            </ul>
+            </ul><br>
 
             <hr />
 
             <p data-i18n="text_68">💌 Pour toute question, contactez-nous directement.</p>
         </div>
     </div>
-    
+
     <!-- Réglements -->
     <!-- Home -->
     <section class="home">
@@ -268,6 +264,8 @@
                 <li><a href="#temoignages" data-i18n="text_75">Témoignages</a></li>
                 <li><a href="reservation.html" data-i18n="text_76">Réservez</a></li>
                 <li><a href="#carte" data-i18n="text_77">Contact</a></li>
+                <li><a id="btn-fr" onclick="switchTo('fr')">FR</a></li>
+                <li><a id="btn-en" onclick="switchTo('en')" style="display: none;">EN</a></li>
             </ul>
         </div>
         <!-- home_page_content -->

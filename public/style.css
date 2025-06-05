@@ -1099,7 +1099,7 @@ footer {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.9);
+    background: rgba(0, 0, 0, 0.6);
     justify-content: center;
     align-items: center;
     z-index: 9998;
@@ -1232,4 +1232,15 @@ footer {
         max-height: 400px;
         /* limite la hauteur pour éviter qu'elle prenne tout l'écran */
     }
+}
+ /* boite erreur */
+.error-box {
+    background-color: #ffe0e0;
+    color: #d8000c;
+    padding: 10px 15px;
+    margin-top: 10px;
+    border-left: 5px solid #d8000c;
+    border-radius: 5px;
+    font-size: 14px;
+    max-width: 400px;
 }

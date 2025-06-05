@@ -70,37 +70,65 @@ const transporter = nodemailer.createTransport({
 
 app.post('/send-confirmation-email', async (req, res) => {
   const { email, name, startDate, endDate, total } = req.body;
-
   try {
+    // ✉️ Premier e-mail : message d’accueil
     await transporter.sendMail({
       from: `"Chalet NovelEra" <${process.env.GMAIL_USER}>`,
       to: email,
-      subject: 'Confirmation de votre réservation - Chalet NovelEra',
+      subject: 'Merci pour votre réservation au Chalet NovelEra 🏡',
       html: `
-        <h2>Bonjour ${name},</h2>
-        <p>Merci pour votre réservation !</p>
-        <p><strong>Dates :</strong> du ${startDate} au ${endDate}</p>
-        <p><strong>Montant total :</strong> ${total}$ CAD</p>
-        <p>Nous avons bien reçu votre paiement.</p>
-        <p>Au plaisir de vous accueillir !</p>
+        <p>Bonjour ${name},</p>
+        <p>Merci beaucoup pour votre réservation au <strong>Chalet NovelEra</strong> 🏡. Nous sommes ravis de vous accueillir et espérons que vous passerez un séjour inoubliable.</p>
+        <p>Le Chalet NovelEra offre 4 chambres, 2 salles de bains, une cuisine équipée 🍽️, 2 salons spacieux 🛋️, et une salle de jeux 🎱. Vous pourrez profiter de l'accès direct au lac 🌊, du jacuzzi ♨️, et des embarcations nautiques 🚣. Situé dans une région riche en activités 🌲, le chalet promet un séjour mémorable en toute saison ❄️🌞.</p>
+        <p><strong>Important :</strong> l’accès au chalet est réservé à un maximum de 14 personnes, dont 8 adultes (âgés de 16 ans et plus).</p>
+        <p>Si vous avez des questions ou des besoins particuliers, n'hésitez pas à nous contacter. Nous sommes là pour vous assurer une expérience parfaite.</p>
+        <p>Nous sommes certains que vous apprécierez votre séjour !</p>
+        <p>Merci encore et à très bientôt !</p>
         <br/>
-        <em>Chalet NovelEra</em>
+        <p>Cordialement,<br/>
+        <em>Chalet NovelEra</em></p>
       `
     });
 
+    console.log("✅ Premier e-mail envoyé.");
+
+    // ✉️ Deuxième e-mail : pièces jointes et instructions
+    await transporter.sendMail({
+      from: `"Chalet NovelEra" <${process.env.GMAIL_USER}>`,
+      to: email,
+      subject: '📎 Règlement d’accès – Documents requis',
+      html: `
+        <h3>Règlement d'accès : Important</h3>
+        <p>Pour pouvoir vous remettre les accès, nous devons impérativement recevoir :</p>
+        <ul>
+          <li>✅ Le contrat signé</li>
+          <li>✅ Une photo de votre preuve d'identité avec adresse</li>
+        </ul>
+        <p><strong>⚠️ Tout retard dans l’envoi de ces documents pourrait entraîner un décalage dans la remise des accès.</strong></p>
+        <p>Merci de compléter cette étape au plus vite afin que nous puissions planifier vos accès automatiquement.</p>
+        <p><em>Les mises à jour se font toutes les 48 heures, donc tout retard de votre part pourrait repousser la date d'accès.</em></p>
+        <br/>
+        <p>Cordialement,<br/>
+        <em>Chalet NovelEra</em></p>
+      `,
+      attachments: [
+        {
+          filename: 'contrat.pdf',
+          path: path.join(__dirname, 'public', 'docs', 'contrat.pdf')
+        }
+      ]
+    });
+
+    console.log("✅ Deuxième e-mail envoyé avec pièce jointe.");
+
+    // ✅ Répondre immédiatement au frontend une fois les 2 mails envoyés
     res.status(200).send({ success: true });
+
   } catch (error) {
-    console.error("Erreur lors de l'envoi de l'e-mail :", error);
+    console.error("❌ Erreur lors de l'envoi des e-mails :", error);
     res.status(500).send({ success: false, error });
   }
 });
-
-// // Pour verifier que deux dates ne se chevauchent pas
-// function datesSeChevauchent(debut1, fin1, debut2, fin2) {
-//   return (new Date(debut1) < new Date(fin2)) && (new Date(debut2) < new Date(fin1));
-// }
-
-
 
 // 📝 Enregistrement d’une réservation locale
 app.post('/add-reservation', async (req, res) => {
@@ -178,6 +206,6 @@ app.post('/add-reservation', async (req, res) => {
 
 app.listen(PORT, () => {
   const isLocal = process.env.NODE_ENV !== 'production';
-  const host = isLocal ? 'http://localhost' : 'https://chalet-novelera.onrender.com';
+  const host = isLocal ? 'http://localhost' : 'https://novelera.onrender.com';
   console.log(`✅ Serveur en ligne sur ${host}:${PORT}`);
 });

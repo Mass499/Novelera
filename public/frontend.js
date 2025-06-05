@@ -143,7 +143,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 { src: 'images/balcon.avif', name: 'balcon_1' }
             ],
             la_terasse: [
-                { src: 'images/Dehors.avif', name: 'terasse_1' },
                 { src: 'images/terrasse.avif', name: 'terasse_2' }
             ],
             le_spa: [
