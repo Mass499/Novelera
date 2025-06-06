@@ -170,7 +170,7 @@ function clearDate() {
 // Définir la base URL du backend selon l'environnement
 const backendUrl = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
     ? 'http://localhost:3000'
-    : 'https://novelera.onrender.com/'; // Remplace par ton URL Render ici
+    : 'https://novelera.onrender.com'; // Remplace par ton URL Render ici
 
 async function getBlockedDates() {
     try {
