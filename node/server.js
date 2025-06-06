@@ -10,7 +10,8 @@ const PORT = process.env.PORT || 3000;
 
 // Sert tous les fichiers statiques du dossier public
 
-app.use(express.static(path.join(__dirname, 'public')));
+// app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '..', 'public_html')));
 app.use(cors());
 app.use(express.json());
 
@@ -114,7 +115,7 @@ app.post('/send-confirmation-email', async (req, res) => {
       attachments: [
         {
           filename: 'contrat.pdf',
-          path: path.join(__dirname, 'public', 'docs', 'contrat.pdf')
+          path:  path.join(__dirname, '..', 'public_html', 'docs', 'contrat.pdf')
         }
       ]
     });

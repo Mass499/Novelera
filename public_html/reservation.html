@@ -53,6 +53,23 @@
         <p>TVQ (9.975%) : <span id="tvqLine">0.00$ CAD</span></p>
         <hr>
         <p><strong>Total : <span id="totalPrice">0</span>$ CAD</strong></p>
+
+        <div class="user-info">
+          <div class="user-info-header">
+            <h3>Informations personnelles</h3>
+            <hr />
+          </div>
+
+          <label for="firstName">Prénom</label>
+          <input type="text" id="firstName" placeholder="Jean" required>
+
+          <label for="lastName">Nom</label>
+          <input type="text" id="lastName" placeholder="Dupont" required>
+
+          <label for="email">Adresse e-mail</label>
+          <input type="email" id="email" placeholder="jean.dupont@email.com" required>
+        </div>
+
         <div style="display: flex; flex-direction: column; gap: 0.5em;">
           <label style="display: flex; align-items: center; gap: 0.5em; cursor: pointer; font-size: 16px;">
             <input type="checkbox" id="acceptConditions" style="width: 18px; height: 18px; accent-color: #5ac8fa;" />
@@ -63,17 +80,13 @@
             Conditions d’utilisation
           </a><br>
         </div>
-
-
         <!-- Conteneur du bouton -->
         <div id="paypal-button-container"></div>
-
         <!-- Message de confirmation -->
         <div id="confirmationMessage"
           style="display: none; padding: 20px; margin-top: 20px; background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; border-radius: 5px;">
           Votre réservation a bien été confirmée. Merci !
         </div>
-
       </div>
     </div>
   </section>
@@ -105,7 +118,8 @@
               <li data-i18n="text_367">Il assume la pleine et entière responsabilité des personnes à qui il permet
                 l’accès.</li><br>
               <li data-i18n="text_368">Les occupants à qui le locataire permet l’accès doivent se conduire de façon à ne
-                pas troubler les autres résidents des immeubles avoisinants dans la jouissance normale des lieux.</li><br>
+                pas troubler les autres résidents des immeubles avoisinants dans la jouissance normale des lieux.</li>
+              <br>
               <br>
               <li data-i18n="text_369">Les bruits susceptibles de troubler la paix et le bien-être du voisinage sont
                 interdits sous peine d’amende et d’expulsion des occupants sans aucun remboursement.</li><br>
@@ -144,7 +158,8 @@
         <ul>
           <li data-i18n="text_382">Établissement non-fumeur</li><br>
           <li data-i18n="text_383">Il est interdit de fumer ou de vapoter à l’intérieur du chalet.</li><br>
-          <li data-i18n="text_384">Il est permis de fumer à l’extérieur, à plus de 9 mètres des portes extérieures.</li><br>
+          <li data-i18n="text_384">Il est permis de fumer à l’extérieur, à plus de 9 mètres des portes extérieures.</li>
+          <br>
           <li data-i18n="text_385">Toute infraction à cette clause entraîne une amende de 1000 $.</li><br>
         </ul>
         <ul>
@@ -214,7 +229,8 @@
         </ul>
         <ul>
           <li data-i18n="text_421">L'usage du BBQ (si applicable)</li><br>
-          <li data-i18n="text_422">Veuillez nettoyer le BBQ après chaque usage et remettre la housse protectrice.</li><br>
+          <li data-i18n="text_422">Veuillez nettoyer le BBQ après chaque usage et remettre la housse protectrice.</li>
+          <br>
           <li data-i18n="text_423">Des frais de 45 $ seront facturés en cas de négligence manifeste.</li><br>
           <li data-i18n="text_424">Le BBQ est disponible de mai à octobre inclusivement.</li><br>
           <li data-i18n="text_425">Pour les BBQ au gaz, le propane est fourni. Pour les BBQ aux briquettes, veuillez
@@ -258,7 +274,8 @@
           <li data-i18n="text_444">Véhicules récréatifs</li><br>
           <li data-i18n="text_445">Il est strictement interdit d'installer des tentes, roulottes, tentes-roulottes ou
             tout autre véhicule récréatif sur le terrain ou aux alentours.</li><br>
-          <li data-i18n="text_446">Il est prohibé d'utiliser des bâtiments accessoires à des fins d'hébergement.</li><br>
+          <li data-i18n="text_446">Il est prohibé d'utiliser des bâtiments accessoires à des fins d'hébergement.</li>
+          <br>
         </ul>
         <ul>
           <li data-i18n="text_447">Risque de blessure et de mort</li><br>
@@ -327,12 +344,14 @@
           <li data-i18n="text_478">Le locataire devra se conformer immédiatement.</li><br>
           <li data-i18n="text_479">Si aucune réponse ou collaboration n'est reçue dans l'heure suivant l'envoi de
             l'avis, les procédures (amende ou expulsion) seront appliquées sans remboursement.</li><br>
-          <li data-i18n="text_480">Le montant de l'amende ou des frais sera à l'entière discrétion du gestionnaire.</li><br>
+          <li data-i18n="text_480">Le montant de l'amende ou des frais sera à l'entière discrétion du gestionnaire.</li>
+          <br>
           <li data-i18n="text_481">Liste des charges supplémentaires</li><br>
           <li data-i18n="text_482">• 100 $/h pour les heures de ménage supplémentaires. Si ce temps excède 3 h, des
             frais de 750 $ seront déduits du dépôt de sécurité.</li><br>
           <li data-i18n="text_483">• 200 $ si le spa doit être vidé en raison de négligence.</li><br>
-          <li data-i18n="text_484">• Bris et/ou vol d'objet : Le montant retenu varie selon la valeur de l'objet.</li><br>
+          <li data-i18n="text_484">• Bris et/ou vol d'objet : Le montant retenu varie selon la valeur de l'objet.</li>
+          <br>
           <li data-i18n="text_485">• Bris ou dommage à la bâtisse et l'ameublement : Le dépôt de sécurité sera conservé
             entièrement jusqu'à la réparation ou le remplacement. Des frais administratifs peuvent s'ajouter.</li><br>
         </ul>
@@ -359,18 +378,23 @@
             majeure (ex. : catastrophes naturelles, pandémies, conflits armés, etc.).</li><br>
         </ul>
         <ul>
-  <li data-i18n="text_495">Clause de modification du contrat</li><br>
-  <li data-i18n="text_496">Toute modification au présent contrat doit être effectuée par écrit et signée par les deux parties, ou confirmée par courriel.</li><br>
+          <li data-i18n="text_495">Clause de modification du contrat</li><br>
+          <li data-i18n="text_496">Toute modification au présent contrat doit être effectuée par écrit et signée par les
+            deux parties, ou confirmée par courriel.</li><br>
 
-  <li data-i18n="text_497">Langue et juridiction</li><br>
-  <li data-i18n="text_498">Le présent contrat est régi par les lois de la Province de Québec.</li><br>
-  <li data-i18n="text_499">En cas de litige, les tribunaux du district judiciaire où est situé l'immeuble seront compétents, à moins d'un accord différent entre les Parties.</li><br>
-  <li data-i18n="text_500">Le présent contrat est rédigé en français. En cas de différence d'interprétation entre une version en langue étrangère et la version française, la version française prévaudra.</li><br>
+          <li data-i18n="text_497">Langue et juridiction</li><br>
+          <li data-i18n="text_498">Le présent contrat est régi par les lois de la Province de Québec.</li><br>
+          <li data-i18n="text_499">En cas de litige, les tribunaux du district judiciaire où est situé l'immeuble seront
+            compétents, à moins d'un accord différent entre les Parties.</li><br>
+          <li data-i18n="text_500">Le présent contrat est rédigé en français. En cas de différence d'interprétation
+            entre une version en langue étrangère et la version française, la version française prévaudra.</li><br>
 
-  <li data-i18n="text_501" style="margin-top: 1em; font-weight: bold;">SIGNATURES</li><br>
-  <li data-i18n="text_502">En signant ci-dessous, le Locataire déclare avoir lu et compris l’ensemble des clauses du présent contrat et s'engage à les respecter.</li><br>
-  <li data-i18n="text_503">Le Gestionnaire et le Locataire conviennent que ce contrat constitue l'intégralité de leur entente.</li><br>
-</ul>
+          <li data-i18n="text_501" style="margin-top: 1em; font-weight: bold;">SIGNATURES</li><br>
+          <li data-i18n="text_502">En signant ci-dessous, le Locataire déclare avoir lu et compris l’ensemble des
+            clauses du présent contrat et s'engage à les respecter.</li><br>
+          <li data-i18n="text_503">Le Gestionnaire et le Locataire conviennent que ce contrat constitue l'intégralité de
+            leur entente.</li><br>
+        </ul>
 
 
 

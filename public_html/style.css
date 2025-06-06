@@ -167,6 +167,50 @@ body {
 
 /* Réglements Fin */
 
+/* Info Client début */
+.user-info label {
+            font-weight: bold;
+            display: block;
+            margin-top: 12px;
+            margin-bottom: 6px;
+          }
+
+          .user-info input {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+          }
+
+          .user-info {
+            margin-bottom: 24px;
+          }
+
+          .user-info-separator {
+            border: none;
+            border-top: 2px solid #000;
+            /* couleur bleu clair */
+            margin: 20px 0 10px 0;
+            width: 100%;
+          }
+
+          .user-info-header h3 {
+            margin: 0;
+            font-weight: bold;
+            color:black;
+            font-size: 1.2rem;
+          }
+
+          .user-info-header hr {
+            border: none;
+            border-top: 2px solid #000;
+            margin: 6px 0 16px 0;
+            width: 100%;
+          }
+/* Info client Fin */
+
 /* Condition de séjour Début */
 .condition-modal {
     position: fixed;

@@ -68,12 +68,24 @@ paypal.Buttons({
             return; // Arrête la création de la commande
         }
 
+        // Nom prenom
+        const firstName = document.getElementById('firstName').value.trim();
+        const lastName = document.getElementById('lastName').value.trim();
+        const email = document.getElementById('email').value.trim();
+
+        if (!firstName || !lastName || !email || !email.includes('@')) {
+            alert("Veuillez remplir votre prénom, nom et adresse e-mail valides.");
+            return;
+        }
+
         // Récupère le total au moment du clic
         let total = parseFloat(document.getElementById('totalPrice').textContent);
         if (isNaN(total) || total <= 0) {
             alert("Veuillez choisir une période de réservation valide.");
             return;
         }
+
+
 
         return actions.order.create({
             purchase_units: [{
@@ -87,8 +99,14 @@ paypal.Buttons({
     onApprove: async function (data, actions) {
         try {
             const details = await actions.order.capture();
-            const email = details.payer.email_address;
-            const name = details.payer.name.given_name;
+            // const email = details.payer.email_address;
+            // const name = details.payer.name.given_name;
+            const firstName = document.getElementById('firstName').value.trim();
+            const lastName = document.getElementById('lastName').value.trim();
+            const name = `${firstName} ${lastName}`;
+            const email = document.getElementById('email').value.trim();
+
+
             const total = parseFloat(document.getElementById('totalPrice').textContent);
             const range = document.getElementById('dateRange').value;
             const [startDate, endDate] = range.split(' - ');
@@ -144,6 +162,9 @@ function clearDate() {
     document.getElementById('tvqLine').textContent = '0.00$ CAD';
     document.getElementById('totalPrice').textContent = '0';
     document.getElementById('acceptConditions').checked = false;
+    document.getElementById('firstName').value = '';
+    document.getElementById('lastName').value = '';
+    document.getElementById('email').value = '';
     if (picker) picker.clearSelection();
 }
 // Définir la base URL du backend selon l'environnement
@@ -238,6 +259,9 @@ window.addEventListener('DOMContentLoaded', () => {
     document.getElementById('tvqLine').textContent = '0.00$ CAD';
     document.getElementById('totalPrice').textContent = '0.00';
     document.getElementById('acceptConditions').checked = false;
+    document.getElementById('firstName').value = '';
+    document.getElementById('lastName').value = '';
+    document.getElementById('email').value = '';
 
     // Réinitialiser le sélecteur de date s'il est déjà initialisé
     if (picker) picker.clearSelection();
