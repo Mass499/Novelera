@@ -207,6 +207,6 @@ app.post('/add-reservation', async (req, res) => {
 
 app.listen(PORT, () => {
   const isLocal = process.env.NODE_ENV !== 'production';
-  const host = isLocal ? 'http://localhost' : 'https://novelera.onrender.com';
+  const host = isLocal ? 'http://localhost' : 'https://novelera.onrender.com/';
   console.log(`✅ Serveur en ligne sur ${host}:${PORT}`);
 });
